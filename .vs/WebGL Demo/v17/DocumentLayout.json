@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\FatihKaraku\u015F\\OneDrive - M3 M\u00DCHEND\u0130SL\u0130K SANAY\u0130 VE T\u0130CARET L\u0130M\u0130TED \u015E\u0130RKET\u0130\\Desktop\\WebGL Demo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\FatihKaraku\u015F\\OneDrive - M3 M\u00DCHEND\u0130SL\u0130K SANAY\u0130 VE T\u0130CARET L\u0130M\u0130TED \u015E\u0130RKET\u0130\\Desktop\\WebGL Demo\\Assets\\Scripts\\Hide_n_UnHide.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Hide_n_UnHide.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\FatihKaraku\u015F\\OneDrive - M3 M\u00DCHEND\u0130SL\u0130K SANAY\u0130 VE T\u0130CARET L\u0130M\u0130TED \u015E\u0130RKET\u0130\\Desktop\\WebGL Demo\\Assets\\Scripts\\Firebase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Firebase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Hide_n_UnHide.cs",
+              "DocumentMoniker": "C:\\Users\\FatihKaraku\u015F\\OneDrive - M3 M\u00DCHEND\u0130SL\u0130K SANAY\u0130 VE T\u0130CARET L\u0130M\u0130TED \u015E\u0130RKET\u0130\\Desktop\\WebGL Demo\\Assets\\Scripts\\Hide_n_UnHide.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Hide_n_UnHide.cs",
+              "ToolTip": "C:\\Users\\FatihKaraku\u015F\\OneDrive - M3 M\u00DCHEND\u0130SL\u0130K SANAY\u0130 VE T\u0130CARET L\u0130M\u0130TED \u015E\u0130RKET\u0130\\Desktop\\WebGL Demo\\Assets\\Scripts\\Hide_n_UnHide.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Hide_n_UnHide.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-30T08:51:49.937Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Firebase.cs",
+              "DocumentMoniker": "C:\\Users\\FatihKaraku\u015F\\OneDrive - M3 M\u00DCHEND\u0130SL\u0130K SANAY\u0130 VE T\u0130CARET L\u0130M\u0130TED \u015E\u0130RKET\u0130\\Desktop\\WebGL Demo\\Assets\\Scripts\\Firebase.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Firebase.cs",
+              "ToolTip": "C:\\Users\\AlpcanKuseyb_1hjp1q0\\WebGL Demo\\Assets\\Scripts\\Firebase.cs*",
+              "RelativeToolTip": "..\\..\\..\\..\\AlpcanKuseyb_1hjp1q0\\WebGL Demo\\Assets\\Scripts\\Firebase.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADYAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-19T13:38:12.932Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

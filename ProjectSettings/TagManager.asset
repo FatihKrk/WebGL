@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - ItemContainer
+  - RVMObjects
+  - Ust
+  - Alt
+  - Sag
+  - Sol
+  - On
+  - Arka
+  - SagArka
+  - SagOn
+  - SolArka
+  - SolOn
+  - UstSol
+  - UstSag
+  - AltSol
+  - AltSag
+  - AltArka
+  - AltOn
+  - UstArka
+  - UstOn
+  - UstOnSag
+  - UstOnSol
+  - UstArkaSag
+  - UstArkaSol
+  - AltOnSag
+  - AltOnSol
+  - AltArkaSag
+  - AltArkaSol
+  - Hierarchy
+  - xHandle
+  - yHandle
+  - zHandle
+  - ColorChanger
+  - TooltipObject
+  - Climbable
+  - GroupPrefab
+  - Canvas
+  - ItemPanel
+  - ParentObject
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - TopLayer
+  - Water
+  - UI
+  - CompassCube
+  - RVM
+  - SeeThrough
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  m_RenderingLayers:
+  - Default
