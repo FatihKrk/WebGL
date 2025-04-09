@@ -17,7 +17,7 @@ public class VisualQueryManager : MonoBehaviour
     Slider slider, itemPanelSlider, groupPanelSlider;
     public Material newMaterial;
     private Dictionary<int, Color> colorDictionary = new Dictionary<int, Color>();
-    private string apiUrl = "https://m3muhendislik.com/api/pointCloudQuery.php";
+    private string apiUrl = "https://m3muhendislik.com/api/sortByTag.php";
 
     [System.Serializable]
     public class ApiResponse
