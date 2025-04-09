@@ -87,7 +87,7 @@ public class ItemPrefab : MonoBehaviour
         {
             mouseClick.currentObject = selectedItem.gameObject;
             mouseClick.FindItemPosition();
-            mouseClick.FindParents(mouseClick.currentObject);
+            StartCoroutine(mouseClick.FindParents(mouseClick.currentObject));
             StartCoroutine(mouseClick.Expand());
             if(mouseClick.attributes_Panel.activeSelf)
             {

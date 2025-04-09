@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 public class VisualQueryManager : MonoBehaviour
 {

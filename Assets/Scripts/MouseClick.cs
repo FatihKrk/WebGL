@@ -393,7 +393,6 @@ public class MouseClick : MonoBehaviour
         }  
     }
 
-    //Tıklanılan objeyi parentiyle gösterme
     public void MultiObjects()
     {
         if (!doubleClickable)
@@ -409,25 +408,36 @@ public class MouseClick : MonoBehaviour
             {
                 ChangeColorBack();
             }
+
             panel.SetActive(false);
             currentObject = clickedObject;
             objects.Clear();
-            FindParents(currentObject);
-            currentObject = objects[objects.Count - 6];
-            objects.Clear();
-            FindParents(currentObject);
-            StartCoroutine(Expand());
-            FindChildrens(currentObject);
-            //treeView.SelectedItem = currentObject;
-            FindPosition();
-
-            ChangeColor();
-            if(attributes_Panel.activeSelf)
-            {
-                ShowAttributes();
-            }
+            StartCoroutine(HandleMultiObjectFlow(currentObject));
         }
     }
+
+    private IEnumerator HandleMultiObjectFlow(GameObject obj)
+    {
+        searchBar.loadingPanel.gameObject.SetActive(true);
+        yield return StartCoroutine(FindParents(obj));
+
+        currentObject = objects[objects.Count - 6];
+        objects.Clear();
+
+        yield return StartCoroutine(FindParents(currentObject));
+        yield return StartCoroutine(Expand());
+
+        FindChildrens(currentObject);
+        //treeView.SelectedItem = currentObject;
+        FindPosition();
+        ChangeColor();
+
+        if (attributes_Panel.activeSelf)
+        {
+            ShowAttributes();
+        }
+    }
+
 
 
     //Tıklanılan objeyi gösterme
@@ -442,7 +452,7 @@ public class MouseClick : MonoBehaviour
             panel.SetActive(false);
             currentObject = clickedObject;
             objects.Clear();
-            FindParents(currentObject);
+            StartCoroutine(FindParents(currentObject));
             FindPosition();
             StartCoroutine(Expand());
             selectedItems = currentObject.GetComponents<MeshRenderer>();
@@ -501,7 +511,7 @@ public class MouseClick : MonoBehaviour
     public void Search()
     {
         objects.Clear();
-        FindParents(currentObject);
+        StartCoroutine(FindParents(currentObject));
         StartCoroutine(Expand());
     }
 
@@ -540,12 +550,13 @@ public class MouseClick : MonoBehaviour
     }
 
     //Tıklanılan objenin parent'larını bulma
-    public void FindParents(GameObject expandingObject)
+    public IEnumerator FindParents(GameObject expandingObject)
     {
         while (expandingObject.transform.parent != null)
         {
             expandingObject = expandingObject.transform.parent.gameObject;
             objects.Add(expandingObject);
+            yield return null;
         }
         if(expandingObject.transform.parent == null) objects.Add(expandingObject);
     }
@@ -657,7 +668,7 @@ public class MouseClick : MonoBehaviour
             {
                 treeViewExpander.IsOn = true;
                 // Her bir öğe için bir kare bekle, işlemi zamana yay
-                yield return new WaitForSeconds(0.1f);
+                yield return null;
             }
         }
         treeView.SelectedItem = currentObject;
