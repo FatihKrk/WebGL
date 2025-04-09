@@ -9,6 +9,7 @@ EditorBuildSettings:
     path: Assets/Battlehub/TreeView.unity
     guid: 581dd8a092dfe3b4c91e8071b4bd55b9
   - enabled: 1
-    path: Assets/PointCloud.unity
+    path: Assets/SamplePlant.unity
     guid: 651818a3f62d4e0408e761b3ae0c970e
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
