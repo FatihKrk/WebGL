@@ -65,6 +65,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.38f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\SimpleLodSystem.cs" />
     <Compile Include="Assets\Scripts\ChangeColor.cs" />
     <Compile Include="Assets\Scripts\PrefabManager.cs" />
     <Compile Include="Assets\Scripts\Tooltip.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Assets\Scripts\MoveButtons.cs" />
     <Compile Include="Assets\Scripts\ItemPrefab.cs" />
     <Compile Include="Assets\FlexibleColorPicker\Scripts\FCP_Persistence.cs" />
+    <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\AotStubs.cs" />
     <Compile Include="Assets\FlexibleColorPicker\Scripts\FCP_SpriteMeshEditor.cs" />
     <Compile Include="Assets\Scripts\GetAttFromSql.cs" />
     <Compile Include="Assets\Scripts\SearchBar.cs" />
@@ -99,6 +101,7 @@
     <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\Materials\ClippingOpaque.shader" />
     <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\link.xml" />
     <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
