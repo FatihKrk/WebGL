@@ -65,16 +65,16 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.38f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Pcx\Runtime\BakedPointCloud.cs" />
-    <Compile Include="Assets\Pcx\Runtime\PointCloudData.cs" />
-    <Compile Include="Assets\Pcx\Runtime\PointCloudRenderer.cs" />
+    <Compile Include="Assets\Packages\Pcx\Runtime\PointCloudData.cs" />
+    <Compile Include="Assets\Packages\Pcx\Runtime\BakedPointCloud.cs" />
+    <Compile Include="Assets\Packages\Pcx\Runtime\PointCloudRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Pcx\Runtime\Pcx.asmdef" />
-    <None Include="Assets\Pcx\Runtime\Shaders\Common.cginc" />
-    <None Include="Assets\Pcx\Runtime\Shaders\Disk.cginc" />
-    <None Include="Assets\Pcx\Runtime\Shaders\Point.shader" />
-    <None Include="Assets\Pcx\Runtime\Shaders\Disk.shader" />
+    <None Include="Assets\Packages\Pcx\Runtime\Pcx.asmdef" />
+    <None Include="Assets\Packages\Pcx\Runtime\Shaders\Common.cginc" />
+    <None Include="Assets\Packages\Pcx\Runtime\Shaders\Disk.cginc" />
+    <None Include="Assets\Packages\Pcx\Runtime\Shaders\Point.shader" />
+    <None Include="Assets\Packages\Pcx\Runtime\Shaders\Disk.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

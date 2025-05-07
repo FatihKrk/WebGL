@@ -2,111 +2,166 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleLodSystem : MonoBehaviour
+public class AutoGridLodSystem : MonoBehaviour
 {
-    GameObject first_Parent, user;
-    Vector3 centerPos = new Vector3(202,107,1505);
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public float distanceThreshold = 20f;
+    public float toggleCooldown = 1f;
+
+    private GameObject user;
+    private GameObject firstParent;
+
+    private List<MeshRenderer>[] regionRenderers;
+    private Vector3[] regionCenters;
+    private bool[] regionIsFar;
+    private float[] lastToggleTimes;
+
+    private Vector3 lastUserPosition;
+    private float moveThreshold = 0.5f;
+
+    private int gridX = 1, gridY = 1, gridZ = 1; // Otomatik belirlenecek
+    private const int idealObjectsPerRegion = 750;
+
+    private void Start()
     {
         user = GameObject.FindGameObjectWithTag("MainCamera");
-        first_Parent = GameObject.FindGameObjectWithTag("ParentObject");
-        InvokeRepeating(nameof(CheckDistanceAndToggle), 0f, 0.5f); // Yarım saniyede bir kontrol
-        if (first_Parent == null) return;
+        firstParent = GameObject.FindGameObjectWithTag("ParentObject");
 
-        foreach (MeshRenderer renderer in first_Parent.GetComponentsInChildren<MeshRenderer>(true))
+        if (user == null || firstParent == null) return;
+
+        Bounds totalBounds = CalculateTotalBounds();
+        Vector3 min = totalBounds.min;
+        Vector3 size = totalBounds.size;
+
+        List<MeshRenderer> smallObjects = new List<MeshRenderer>();
+
+        foreach (var rend in firstParent.GetComponentsInChildren<MeshRenderer>(true))
         {
-            Bounds bounds = renderer.bounds;
-            float volume = bounds.size.x * bounds.size.y * bounds.size.z;
-
-            if (volume < 0.01)
+            float volume = rend.bounds.size.x * rend.bounds.size.y * rend.bounds.size.z;
+            if (volume < 0.01f)
             {
-                GameObject obj = renderer.gameObject;
-                if (!cachedItems.Contains(obj))
-                {
-                    cachedItems.Add(obj);
-                }
+                smallObjects.Add(rend);
+                rend.enabled = false;
+            }   
+        }
+
+        DetermineGridSize(smallObjects.Count);
+
+        int regionCount = gridX * gridY * gridZ;
+
+        regionRenderers = new List<MeshRenderer>[regionCount];
+        regionCenters = new Vector3[regionCount];
+        regionIsFar = new bool[regionCount];
+        lastToggleTimes = new float[regionCount];
+
+        for (int i = 0; i < regionCount; i++)
+            regionRenderers[i] = new List<MeshRenderer>();
+
+        foreach (var rend in smallObjects)
+        {
+            int index = GetRegionIndex(rend.bounds.center, min, size);
+            regionRenderers[index].Add(rend);
+        }
+
+        for (int i = 0; i < regionRenderers.Length; i++)
+        {
+            if (regionRenderers[i].Count == 0) continue;
+
+            Vector3 sum = Vector3.zero;
+            foreach (var rend in regionRenderers[i])
+                sum += rend.bounds.center;
+
+            regionCenters[i] = sum / regionRenderers[i].Count;
+        }
+
+        lastUserPosition = user.transform.position;
+        InvokeRepeating(nameof(CheckDistanceAndToggle), 0f, 0.5f);
+    }
+
+    private void DetermineGridSize(int objectCount)
+    {
+        int regionTarget = Mathf.Max(1, objectCount / idealObjectsPerRegion);
+        float cubeRoot = Mathf.Pow(regionTarget, 1f / 3f);
+
+        gridX = Mathf.Max(1, Mathf.RoundToInt(cubeRoot));
+        gridY = Mathf.Max(1, Mathf.RoundToInt(cubeRoot * 0.66f)); // Y daha kısa olsun (çatı yüksekliği genelde daha az)
+        gridZ = Mathf.Max(1, Mathf.RoundToInt(cubeRoot));
+    }
+
+    private void CheckDistanceAndToggle()
+    {
+        Vector3 currentPos = user.transform.position;
+        if (Vector3.Distance(currentPos, lastUserPosition) < moveThreshold)
+            return;
+
+        float currentTime = Time.time;
+
+        for (int i = 0; i < regionRenderers.Length; i++)
+        {
+            if (regionRenderers[i].Count == 0) continue;
+
+            if (currentTime - lastToggleTimes[i] < toggleCooldown)
+                continue;
+
+            float dist = Vector3.Distance(currentPos, regionCenters[i]);
+            bool shouldBeFar = dist >= distanceThreshold;
+
+            if (shouldBeFar != regionIsFar[i])
+            {
+                regionIsFar[i] = shouldBeFar;
+                lastToggleTimes[i] = currentTime;
+                StartCoroutine(SetRenderersActive(regionRenderers[i], !shouldBeFar));
+            }
+        }
+
+        lastUserPosition = currentPos;
+    }
+
+    private IEnumerator SetRenderersActive(List<MeshRenderer> renderers, bool state)
+    {
+        int counter = 0;
+        const int chunkSize = 250;
+
+        foreach (var rend in renderers)
+        {
+            if (rend != null)
+                rend.enabled = state;
+
+            counter++;
+            if (counter >= chunkSize)
+            {
+                counter = 0;
+                yield return null;
             }
         }
     }
 
-    void CheckDistanceAndToggle()
+    private Bounds CalculateTotalBounds()
     {
-        float distanceToCenter = Vector3.Distance(user.transform.position, centerPos);
+        Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
+        bool initialized = false;
 
-        if (distanceToCenter >= 20f && !isFar)
+        foreach (var rend in firstParent.GetComponentsInChildren<MeshRenderer>(true))
         {
-            isFar = true;
-            StartCoroutine(SetRenderersActive(false));
-        }
-        else if (distanceToCenter < 20f && isFar)
-        {
-            isFar = false;
-            StartCoroutine(SetRenderersActive(true));
-        }
-    }
-
-    // Bu flag her iki durumu kontrol eder
-    private bool isFar = false;
-
-    IEnumerator SetRenderersActive(bool state)
-    {
-        int chunkSize = 250; // Her frame'de 20 renderer aktif/pasif et
-        int count = 0;
-
-        foreach (GameObject item in cachedItems)
-        {
-            foreach (var renderer in item.GetComponentsInChildren<MeshRenderer>(true))
+            if (!initialized)
             {
-                renderer.enabled = state;
-                count++;
-
-                if (count >= chunkSize)
-                {
-                    count = 0;
-                    yield return null; // Bir frame bekle
-                }
+                bounds = new Bounds(rend.bounds.center, rend.bounds.size);
+                initialized = true;
             }
-        }
-    }
-
-
-
-    List<GameObject> cachedItems = new List<GameObject>();
-
-    GameObject GetOrCacheItem(string name)
-    {
-        Transform item = Search(name);
-        if (item == null)
-        {
-            return null;
-        }
-        return item.gameObject;
-    }
-
-
-    public Transform Search(string searched_Text)
-    {
-        Stack<Transform> stack = new Stack<Transform>();
-        stack.Push(first_Parent.transform);
-
-        while (stack.Count > 0)
-        {
-            var current = stack.Pop();
-
-            // Objeyi adıyla karşılaştırıyoruz
-            if (current.name.IndexOf(searched_Text, System.StringComparison.OrdinalIgnoreCase) >= 0)
+            else
             {
-                return current; // Objeyi bulduktan sonra hemen geri dön
-            }
-
-            // İlk olarak child'ları stack'e tersten ekleyerek önce ilk child'ın işlenmesini sağlıyoruz
-            for (int i = current.childCount - 1; i >= 0; i--)
-            {
-                stack.Push(current.GetChild(i));
+                bounds.Encapsulate(rend.bounds);
             }
         }
 
-        return null; // Eğer obje bulunamazsa null döner
+        return bounds;
+    }
+
+    private int GetRegionIndex(Vector3 pos, Vector3 min, Vector3 size)
+    {
+        int ix = Mathf.Clamp((int)(((pos.x - min.x) / size.x) * gridX), 0, gridX - 1);
+        int iy = Mathf.Clamp((int)(((pos.y - min.y) / size.y) * gridY), 0, gridY - 1);
+        int iz = Mathf.Clamp((int)(((pos.z - min.z) / size.z) * gridZ), 0, gridZ - 1);
+
+        return ix + iy * gridX + iz * gridX * gridY;
     }
 }

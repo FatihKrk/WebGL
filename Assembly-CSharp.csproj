@@ -67,56 +67,56 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\SimpleLodSystem.cs" />
     <Compile Include="Assets\Scripts\ChangeColor.cs" />
+    <Compile Include="Assets\Packages\FlexibleColorPicker\Scripts\FCP_Persistence.cs" />
     <Compile Include="Assets\Scripts\PrefabManager.cs" />
     <Compile Include="Assets\Scripts\Tooltip.cs" />
+    <Compile Include="Assets\Packages\FlexibleColorPicker\Scripts\FCP_SpriteMeshEditor.cs" />
     <Compile Include="Assets\Scripts\Compass3D.cs" />
     <Compile Include="Assets\Scripts\Hide_n_UnHide.cs" />
     <Compile Include="Assets\Scripts\VisualQueryManager.cs" />
-    <Compile Include="Assets\FlexibleColorPicker\Scripts\FlexibleColorPicker.cs" />
     <Compile Include="Assets\Scripts\ColliderSize.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\DragImage.cs" />
     <Compile Include="Assets\Scripts\ClippingController.cs" />
     <Compile Include="Assets\Scripts\MoveButtons.cs" />
     <Compile Include="Assets\Scripts\ItemPrefab.cs" />
-    <Compile Include="Assets\FlexibleColorPicker\Scripts\FCP_Persistence.cs" />
-    <Compile Include="Assets\FlexibleColorPicker\Scripts\FCP_SpriteMeshEditor.cs" />
+    <Compile Include="Assets\Packages\FlexibleColorPicker\ExampleScene\FCP_ExampleScript.cs" />
     <Compile Include="Assets\Scripts\GetAttFromSql.cs" />
     <Compile Include="Assets\Scripts\SearchBar.cs" />
     <Compile Include="Assets\Scripts\MouseClick.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\FlexibleColorPicker\ExampleScene\FCP_ExampleScript.cs" />
     <Compile Include="Assets\Scripts\ApplyColor.cs" />
+    <Compile Include="Assets\Packages\FlexibleColorPicker\Scripts\FlexibleColorPicker.cs" />
     <Compile Include="Assets\Scripts\UIPositionChanger.cs" />
     <Compile Include="Assets\Scripts\Measure.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
-    <None Include="Assets\Battlehub\README.txt" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
+    <None Include="Assets\Packages\Battlehub\README.txt" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\Materials\ClippingOpaque.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\FlexibleColorPicker\Materials\FCP_Gradient.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Packages\FlexibleColorPicker\Materials\FCP_Gradient.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\Materials\ClippingTransparent.shader" />
   </ItemGroup>
   <ItemGroup>
@@ -1100,12 +1100,12 @@
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.MemoryProfiler.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.MemoryProfiler.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime.Shared">
@@ -1128,12 +1128,12 @@
       <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor.Shared">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.Shared.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
@@ -1152,12 +1152,12 @@
       <HintPath>Library\ScriptAssemblies\Unity.Multiplayer.Center.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.PlasticSCM.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.PlasticSCM.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Performance.Profile-Analyzer.Editor">
@@ -1196,6 +1196,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.Collections.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.VisualScripting.Shared.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
       <Private>False</Private>
@@ -1206,10 +1210,6 @@
     </Reference>
     <Reference Include="Unity.Multiplayer.Center.Common">
       <HintPath>Library\ScriptAssemblies\Unity.Multiplayer.Center.Common.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection">
@@ -1290,11 +1290,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Pcx.Editor.csproj" />
-    <ProjectReference Include="Battlehub.RTEditor.csproj" />
-    <ProjectReference Include="Battlehub.RTEditor.Editor.csproj" />
     <ProjectReference Include="Battlehub.RTEditor.Demo.csproj" />
+    <ProjectReference Include="Battlehub.RTEditor.Editor.csproj" />
     <ProjectReference Include="Pcx.csproj" />
+    <ProjectReference Include="Battlehub.RTEditor.csproj" />
+    <ProjectReference Include="Pcx.Editor.csproj" />
   </ItemGroup>
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <ItemGroup>

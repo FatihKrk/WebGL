@@ -65,17 +65,17 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.38f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Battlehub\RTEditorDemo\Runtime\UIControls\TreeView\TreeViewDemo.cs" />
-    <Compile Include="Assets\Battlehub\RTEditorDemo\Runtime\UIControls\TreeView\ExternalDragItem.cs" />
-    <Compile Include="Assets\Battlehub\RTEditorDemo\Runtime\UIControls\VirtualizingTreeView\VirtualizingTreeViewDemo_DataItems.cs" />
-    <Compile Include="Assets\Battlehub\RTEditorDemo\Runtime\UIControls\VirtualizingTreeView\VirtualizingExternalDragItem.cs" />
-    <Compile Include="Assets\Battlehub\RTEditorDemo\Runtime\UIControls\VirtualizingTreeView\VirtualizingTreeViewDemo.cs" />
-    <Compile Include="Assets\Battlehub\RTEditorDemo\Runtime\UIControls\Common\RotateCamera.cs" />
-    <Compile Include="Assets\Battlehub\RTEditorDemo\Runtime\UIControls\TreeView\ListBoxDemo.cs" />
-    <Compile Include="Assets\Battlehub\RTEditorDemo\Runtime\UIControls\TreeView\Rotation.cs" />
+    <Compile Include="Assets\Packages\Battlehub\RTEditorDemo\Runtime\UIControls\VirtualizingTreeView\VirtualizingTreeViewDemo.cs" />
+    <Compile Include="Assets\Packages\Battlehub\RTEditorDemo\Runtime\UIControls\VirtualizingTreeView\VirtualizingExternalDragItem.cs" />
+    <Compile Include="Assets\Packages\Battlehub\RTEditorDemo\Runtime\UIControls\TreeView\TreeViewDemo.cs" />
+    <Compile Include="Assets\Packages\Battlehub\RTEditorDemo\Runtime\UIControls\Common\RotateCamera.cs" />
+    <Compile Include="Assets\Packages\Battlehub\RTEditorDemo\Runtime\UIControls\TreeView\ListBoxDemo.cs" />
+    <Compile Include="Assets\Packages\Battlehub\RTEditorDemo\Runtime\UIControls\TreeView\Rotation.cs" />
+    <Compile Include="Assets\Packages\Battlehub\RTEditorDemo\Runtime\UIControls\VirtualizingTreeView\VirtualizingTreeViewDemo_DataItems.cs" />
+    <Compile Include="Assets\Packages\Battlehub\RTEditorDemo\Runtime\UIControls\TreeView\ExternalDragItem.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Battlehub\RTEditorDemo\Runtime\Battlehub.RTEditor.Demo.asmdef" />
+    <None Include="Assets\Packages\Battlehub\RTEditorDemo\Runtime\Battlehub.RTEditor.Demo.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
