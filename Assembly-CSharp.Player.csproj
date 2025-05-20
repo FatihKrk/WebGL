@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\ApplyColor.cs" />
     <Compile Include="Assets\Packages\FlexibleColorPicker\Scripts\FlexibleColorPicker.cs" />
     <Compile Include="Assets\Scripts\UIPositionChanger.cs" />
+    <Compile Include="Assets\Faruk Work Space\PathFinderManager.cs" />
     <Compile Include="Assets\Scripts\Measure.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -910,6 +911,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Unity.AI.Navigation.Player.csproj">
+      <Project>{D2424152-C1BB-4BB9-229B-3BC79F89C962}</Project>
+      <Name>Unity.AI.Navigation.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.Player.csproj">
       <Project>{B455F809-3546-78C0-5174-4EB99E6A3CA4}</Project>
       <Name>Unity.RenderPipeline.Universal.ShaderLibrary.Player</Name>
@@ -917,6 +922,10 @@
     <ProjectReference Include="Unity.RenderPipelines.Universal.Shaders.Player.csproj">
       <Project>{38E9E8D0-81FC-101C-F57E-AF5EE13E339E}</Project>
       <Name>Unity.RenderPipelines.Universal.Shaders.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.AI.Navigation.Samples.Player.csproj">
+      <Project>{EE2B1B1C-D8DF-8007-4907-B7F38604F7E5}</Project>
+      <Name>Unity.AI.Navigation.Samples.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.Shared.Player.csproj">
       <Project>{D632928A-42A2-5349-32D1-CF63030BF6E2}</Project>

@@ -21441,6 +21441,54 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993793212}
   m_Mesh: {fileID: -2038792045501729495, guid: 79b3897d25534d643853a53b61d30677, type: 3}
+--- !u!1 &1998228917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1998228918}
+  - component: {fileID: 1998228919}
+  m_Layer: 0
+  m_Name: PathFinderManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1998228918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998228917}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1998228919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998228917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 682db107f03980e4984700e57c65b54a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkableArea: []
+  startObj: {fileID: 0}
+  goalObj: {fileID: 0}
+  neighborDistance: 1.1
 --- !u!1 &2000731179
 GameObject:
   m_ObjectHideFlags: 0
@@ -27813,7 +27861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8032734380786729250, guid: 67236319796770c4eb1cf9814b6c80f8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00032043457
+      value: 0.0002593994
       objectReference: {fileID: 0}
     - target: {fileID: 8032734380786729250, guid: 67236319796770c4eb1cf9814b6c80f8, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -29004,3 +29052,4 @@ SceneRoots:
   - {fileID: 6164218958928535624}
   - {fileID: 1063831877}
   - {fileID: 1868099841}
+  - {fileID: 1998228918}
