@@ -59,7 +59,7 @@
     <UnityVersion>6000.0.38f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\FatihKarakuş\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\FatihKarakuş\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.38f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.38f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.38f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
@@ -68,26 +68,46 @@
     <Compile Include="Assets\Scripts\SimpleLodSystem.cs" />
     <Compile Include="Assets\Scripts\ChangeColor.cs" />
     <Compile Include="Assets\Packages\FlexibleColorPicker\Scripts\FCP_Persistence.cs" />
+    <Compile Include="Assets\Scripts\SectionButtonTooltip.cs" />
     <Compile Include="Assets\Scripts\PrefabManager.cs" />
+    <Compile Include="Assets\Scripts\Paneloff.cs" />
     <Compile Include="Assets\Scripts\Tooltip.cs" />
+    <Compile Include="Assets\Scripts\ToolManager.cs" />
+    <Compile Include="Assets\Scripts\ButtonTooltip.cs" />
+    <Compile Include="Assets\Scripts\SubButtonTooltip.cs" />
     <Compile Include="Assets\Packages\FlexibleColorPicker\Scripts\FCP_SpriteMeshEditor.cs" />
     <Compile Include="Assets\Scripts\Compass3D.cs" />
+    <Compile Include="Assets\Scripts\MyLoadingBar.cs" />
     <Compile Include="Assets\Scripts\Hide_n_UnHide.cs" />
+    <Compile Include="Assets\Scripts\RealLoadingBar.cs" />
+    <Compile Include="Assets\Scripts\GraphicsSettingsManager.cs" />
     <Compile Include="Assets\Scripts\VisualQueryManager.cs" />
     <Compile Include="Assets\Scripts\ColliderSize.cs" />
+    <Compile Include="Assets\Scripts\ToolSelectButton.cs" />
+    <Compile Include="Assets\Scripts\PanelController.cs" />
+    <Compile Include="Assets\Scripts\SidebarController.cs" />
+    <Compile Include="Assets\Scripts\ResizablePanel.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\DragImage.cs" />
     <Compile Include="Assets\Scripts\ClippingController.cs" />
+    <Compile Include="Assets\Scripts\loadingbar_start.cs" />
     <Compile Include="Assets\Scripts\MoveButtons.cs" />
     <Compile Include="Assets\Scripts\ItemPrefab.cs" />
     <Compile Include="Assets\Packages\FlexibleColorPicker\ExampleScene\FCP_ExampleScript.cs" />
     <Compile Include="Assets\Scripts\GetAttFromSql.cs" />
     <Compile Include="Assets\Scripts\SearchBar.cs" />
     <Compile Include="Assets\Scripts\MouseClick.cs" />
+    <Compile Include="Assets\Scripts\FirstPersonController.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\SectionPanelController.cs" />
     <Compile Include="Assets\Scripts\ApplyColor.cs" />
+    <Compile Include="Assets\Scripts\DraggablePanel.cs" />
+    <Compile Include="Assets\Scripts\showtutorial.cs" />
     <Compile Include="Assets\Packages\FlexibleColorPicker\Scripts\FlexibleColorPicker.cs" />
+    <Compile Include="Assets\Scripts\LoadingBlockerController.cs" />
+    <Compile Include="Assets\Scripts\settingstutorial.cs" />
     <Compile Include="Assets\Scripts\UIPositionChanger.cs" />
+    <Compile Include="Assets\Scripts\LoadingBarController.cs" />
     <Compile Include="Assets\Scripts\Measure.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -98,7 +118,7 @@
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\Materials\ClippingOpaque.shader" />
+    <None Include="Assets\Shaders\ClippingOpaque.shader" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
@@ -109,6 +129,8 @@
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\LoadingBarShader.shader" />
+    <None Include="Assets\Shaders\ColorAssigner.compute" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Packages\FlexibleColorPicker\Materials\FCP_Gradient.shader" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
@@ -117,7 +139,7 @@
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
-    <None Include="Assets\Materials\ClippingTransparent.shader" />
+    <None Include="Assets\Shaders\ClippingTransparent.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

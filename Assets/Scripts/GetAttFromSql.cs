@@ -6,7 +6,7 @@ using System;
 public class GetAttFromSql : MonoBehaviour
 {
     // PHP API'nin URL'si
-    private string apiUrl = "https://m3muhendislik.com/api/getAtt.php";
+    private string apiUrl = "https://m3muhendislik.com/api/getMegAtt.php";
     
     [System.Serializable]
     public class TextResponse

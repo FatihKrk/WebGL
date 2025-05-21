@@ -37,7 +37,7 @@ public class AutoGridLodSystem : MonoBehaviour
         foreach (var rend in firstParent.GetComponentsInChildren<MeshRenderer>(true))
         {
             float volume = rend.bounds.size.x * rend.bounds.size.y * rend.bounds.size.z;
-            if (volume < 0.01f)
+            if (volume <= 0.01f)
             {
                 smallObjects.Add(rend);
                 rend.enabled = false;

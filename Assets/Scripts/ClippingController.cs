@@ -84,54 +84,51 @@ public class ClippingController : MonoBehaviour
         if (!moveButtons.section)
         {
             Shader.SetGlobalVector("_Bound", new Vector4(1000000, 1000000, 1000000, 1));
-            ChangeDisabled();
             scaleObj.gameObject.SetActive(false);
             moveObj.gameObject.SetActive(false);
             cube.SetActive(false); // Küpü gizle
         }
 
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
         // Fare tıklaması ile tutamaçları kontrol et
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit, Mathf.Infinity, topLayer))
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            
             lastWorldPosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
+            isOverTopLayer = true;
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, topLayer))
+            if (isMove && hit.collider.tag == "xHandle")
             {
-                isOverTopLayer = true;
+                StartScaling(ScaleAxis.X);
+            }
+            else if (isMove && hit.collider.tag == "yHandle")
+            {
+                StartScaling(ScaleAxis.Y);
+            }
+            else if (isMove && hit.collider.tag == "zHandle")
+            {
+                StartScaling(ScaleAxis.Z);
+            }
 
-                if (isMove && hit.collider.tag == "xHandle")
-                {
-                    StartScaling(ScaleAxis.X);
-                }
-                else if (isMove && hit.collider.tag == "yHandle")
-                {
-                    StartScaling(ScaleAxis.Y);
-                }
-                else if (isMove && hit.collider.tag == "zHandle")
-                {
-                    StartScaling(ScaleAxis.Z);
-                }
-
-                // X, Y veya Z tutamacına tıklanmışsa o eksende ölçekleme yapılacak
-                if (isScale && hit.collider.tag == "xHandle")
-                {
-                    StartScaling(ScaleAxis.X);
-                }
-                else if (isScale && hit.collider.tag == "yHandle")
-                {
-                    StartScaling(ScaleAxis.Y);
-                }
-                else if (isScale && hit.collider.tag == "zHandle")
-                {
-                    StartScaling(ScaleAxis.Z);
-                }
-                // Orta objeye tıklandığında, tüm eksenlerde eşit şekilde ölçekleme yapılacak
-                else if (isScale && hit.collider == centerHandle)
-                {
-                    StartScaling(ScaleAxis.ScaleAllAxes);
-                }
+            // X, Y veya Z tutamacına tıklanmışsa o eksende ölçekleme yapılacak
+            if (isScale && hit.collider.tag == "xHandle")
+            {
+                StartScaling(ScaleAxis.X);
+            }
+            else if (isScale && hit.collider.tag == "yHandle")
+            {
+                StartScaling(ScaleAxis.Y);
+            }
+            else if (isScale && hit.collider.tag == "zHandle")
+            {
+                StartScaling(ScaleAxis.Z);
+            }
+            // Orta objeye tıklandığında, tüm eksenlerde eşit şekilde ölçekleme yapılacak
+            else if (isScale && hit.collider == centerHandle)
+            {
+                StartScaling(ScaleAxis.ScaleAllAxes);
             }
         }
         else isOverTopLayer = false;
@@ -186,6 +183,7 @@ public class ClippingController : MonoBehaviour
                 // Clipping materyaline bu yeni bound değeri atanır
                 Shader.SetGlobalVector("_Bound", newBound);
                 UpdateCubeScale(newBound); // Küpün ölçeğini güncelle
+                UpdateRendererLayerBasedOnScale();
                 lastWorldPosition = currentWorldPosition;
             }
             else
@@ -224,7 +222,7 @@ public class ClippingController : MonoBehaviour
                 // Dünya pozisyonunu bir sonraki frame için güncelle
                 lastWorldPosition = currentWorldPosition;
             }
-            UpdateRendererLayerBasedOnScale();
+            
         }
 
         // Fareyi bıraktığında ölçekleme işlemini durdur
@@ -281,6 +279,7 @@ public class ClippingController : MonoBehaviour
                 // Hacim boyutunu ayarla
                 Shader.SetGlobalVector("_Bound", new Vector4(objRenderer.bounds.size.x + 0.0001f, objRenderer.bounds.size.y + 0.0001f, objRenderer.bounds.size.z + 0.0001f, 1));
                 UpdateCubeScale(); // Küpün ölçeğini güncelle
+                UpdateRendererLayerBasedOnScale();
             }
             else
             {
@@ -295,9 +294,10 @@ public class ClippingController : MonoBehaviour
                 // Clipping hacmi boyutunu ayarlama
                 Shader.SetGlobalVector("_Bound", new Vector4(totalBounds.size.x + 0.0001f, totalBounds.size.y + 0.0001f, totalBounds.size.z + 0.0001f, 1));
                 UpdateCubeScale(); // Küpün ölçeğini güncelle
+                UpdateRendererLayerBasedOnScale();
             }
         }
-        UpdateRendererLayerBasedOnScale();
+        
     }
 
     Bounds CalculateTotalBounds(Transform obj)
@@ -344,7 +344,7 @@ public class ClippingController : MonoBehaviour
         cube.transform.position = clippingPosition; // Küpü clipping pozisyonuna yerleştir
     }
 
-     void UpdateRendererLayerBasedOnScale()
+    void UpdateRendererLayerBasedOnScale()
     {
         // Küpün Scale'ını al
         Vector3 cubeScale = cube.transform.localScale;
