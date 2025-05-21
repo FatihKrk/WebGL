@@ -1,93 +1,79 @@
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PathFinderManager : MonoBehaviour
 {
-    public List<GameObject> walkableArea;
-    public GameObject startObj;
-    public GameObject goalObj;
-    public float neighborDistance = 1.1f;
+    public GameObject parentRoot;
+    public GameObject markerPrefab;
+    public float markerThickness = 0.1f;
 
     void Start()
     {
-        FindAndActivatePath();
-    }
-
-    void FindAndActivatePath()
-    {
-        if (startObj == null || goalObj == null)
+        if (parentRoot == null || markerPrefab == null)
         {
-            Debug.LogWarning("Start veya Goal GameObject atanmad�!");
+            Debug.LogWarning("Parent root veya marker prefab atanmadı.");
             return;
         }
 
-        Dictionary<GameObject, GameObject> cameFrom = new Dictionary<GameObject, GameObject>();
-        Queue<GameObject> frontier = new Queue<GameObject>();
-        HashSet<GameObject> visited = new HashSet<GameObject>();
+        MeshRenderer[] meshRenderers = parentRoot.GetComponentsInChildren<MeshRenderer>(true);
 
-        frontier.Enqueue(startObj);
-        visited.Add(startObj);
-
-        while (frontier.Count > 0)
+        foreach (MeshRenderer rend in meshRenderers)
         {
-            GameObject current = frontier.Dequeue();
+            Bounds bounds = rend.bounds;
+            Vector3 center = bounds.center;
+            Vector3 extents = bounds.extents;
 
-            if (current == goalObj)
-                break;
+            // Alt 4 köşe
+            Vector3[] localBottomCorners = new Vector3[4];
+            localBottomCorners[0] = new Vector3(-extents.x, -extents.y, -extents.z); // sol arka
+            localBottomCorners[1] = new Vector3(extents.x, -extents.y, -extents.z);  // sağ arka
+            localBottomCorners[2] = new Vector3(-extents.x, -extents.y, extents.z);  // sol ön
+            localBottomCorners[3] = new Vector3(extents.x, -extents.y, extents.z);   // sağ ön
 
-            foreach (GameObject neighbor in GetNeighbors(current))
+            // World space'e çevir
+            Vector3[] worldCorners = new Vector3[4];
+            for (int i = 0; i < 4; i++)
+                worldCorners[i] = rend.transform.TransformPoint(localBottomCorners[i]);
+
+            // 2 ana yön seç (ön-arka ve sağ-sol)
+            Vector3 forwardEdge = worldCorners[2] - worldCorners[0];  // sol ön - sol arka
+            Vector3 sideEdge = worldCorners[1] - worldCorners[0];     // sağ arka - sol arka
+
+            float forwardSlope = Mathf.Atan2(forwardEdge.y, forwardEdge.z) * Mathf.Rad2Deg;
+            float sideSlope = Mathf.Atan2(sideEdge.y, sideEdge.x) * Mathf.Rad2Deg;
+
+            float slopeMagnitude = Mathf.Max(Mathf.Abs(forwardSlope), Mathf.Abs(sideSlope));
+
+            bool isSloped = slopeMagnitude > 1f; // 1 dereceden büyükse eğimlidir diyelim
+
+            if (isSloped)
             {
-                if (!visited.Contains(neighbor))
-                {
-                    frontier.Enqueue(neighbor);
-                    visited.Add(neighbor);
-                    cameFrom[neighbor] = current;
-                }
+                Debug.Log($"✅ Eğim var: {rend.name} | Açı: {slopeMagnitude:F2}°");
+
+                // Eğim yönü için world yüzey normalini hesapla
+                Vector3 cross = Vector3.Cross(forwardEdge.normalized, sideEdge.normalized);
+                Vector3 surfaceNormal = cross.normalized;
+
+                // Eğim yönü: düz yukarıdan ne kadar sapmış
+                Vector3 slopeDirection = Vector3.ProjectOnPlane(Vector3.up - surfaceNormal, Vector3.up).normalized;
+
+                // Eğim açısını bul
+                float slopeAngle = Vector3.Angle(Vector3.up, surfaceNormal);
+
+                // Quaternion rotasyon oluştur (slope yönüne doğru eğilsin)
+                Quaternion rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.right, slopeDirection), surfaceNormal);
+
+                // Instantiate et
+                GameObject marker = Instantiate(markerPrefab, bounds.center, rotation, rend.transform);
+                marker.transform.localScale = new Vector3(bounds.size.x, markerThickness, bounds.size.z);
+            }
+            else
+            {
+                Debug.Log($"❌ Eğim yok: {rend.name}");
+
+                // Düzse düz yerleştir
+                GameObject marker = Instantiate(markerPrefab, bounds.center, Quaternion.identity, rend.transform);
+                marker.transform.localScale = new Vector3(bounds.size.x, markerThickness, bounds.size.z);
             }
         }
-
-        List<GameObject> path = new List<GameObject>();
-        GameObject step = goalObj;
-
-        while (step != startObj)
-        {
-            path.Add(step);
-
-            if (!cameFrom.ContainsKey(step))
-            {
-                Debug.LogWarning("Goal objesine ula��labilir yol bulunamad�.");
-                return;
-            }
-
-            step = cameFrom[step];
-        }
-
-        path.Add(startObj);
-
-        // Di�erlerini kapat, sadece yoldakileri a��k b�rak
-        foreach (GameObject obj in walkableArea)
-        {
-            obj.SetActive(path.Contains(obj));
-        }
-
-        Debug.Log("Yol bulundu. Ad�m say�s�: " + path.Count);
-    }
-
-    List<GameObject> GetNeighbors(GameObject current)
-    {
-        List<GameObject> neighbors = new List<GameObject>();
-        Vector3 currentPos = current.transform.position;
-
-        foreach (GameObject obj in walkableArea)
-        {
-            if (obj == current) continue;
-
-            if (Vector3.Distance(obj.transform.position, currentPos) <= neighborDistance)
-            {
-                neighbors.Add(obj);
-            }
-        }
-
-        return neighbors;
     }
 }

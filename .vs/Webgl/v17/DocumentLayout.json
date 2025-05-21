@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\FarukBurakMermer\\WebGL\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|c:\\users\\farukburakmermer\\webgl\\assets\\faruk work space\\pathfindermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\faruk work space\\pathfindermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PathFinderManager.cs",
+              "DocumentMoniker": "C:\\Users\\FarukBurakMermer\\WebGL\\Assets\\Faruk Work Space\\PathFinderManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Faruk Work Space\\PathFinderManager.cs",
+              "ToolTip": "C:\\Users\\FarukBurakMermer\\WebGL\\Assets\\Faruk Work Space\\PathFinderManager.cs",
+              "RelativeToolTip": "Assets\\Faruk Work Space\\PathFinderManager.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAIwCsAAABcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T06:50:32.18Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
