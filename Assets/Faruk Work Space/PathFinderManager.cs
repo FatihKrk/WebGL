@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PathFinderManager : MonoBehaviour
 {
@@ -6,45 +7,130 @@ public class PathFinderManager : MonoBehaviour
 
     void Start()
     {
-        if (parentRoot == null)
-            return;
+        if (parentRoot == null) return;
 
         MeshRenderer[] meshRenderers = parentRoot.GetComponentsInChildren<MeshRenderer>(true);
 
         foreach (MeshRenderer rend in meshRenderers)
         {
             GameObject original = rend.gameObject;
+            MeshFilter mf = original.GetComponent<MeshFilter>();
+            if (mf == null || mf.sharedMesh == null) continue;
 
-            MeshFilter originalMF = original.GetComponent<MeshFilter>();
-            MeshCollider meshCollider = original.GetComponent<MeshCollider>();
+            Mesh mesh = mf.sharedMesh;
+            Vector3[] vertices = mesh.vertices;
+            int[] triangles = mesh.triangles;
 
-            if (originalMF == null || originalMF.sharedMesh == null || meshCollider == null || meshCollider.sharedMesh == null)
+            List<int> bottomTriangles = new List<int>();
+
+            float thresholdAngle = 60f; // 60 derece altındaki yüzeyler hedef
+            float lowestZ = float.MaxValue;
+
+            for (int i = 0; i < triangles.Length; i += 3)
+            {
+                Vector3 v0 = vertices[triangles[i]];
+                Vector3 v1 = vertices[triangles[i + 1]];
+                Vector3 v2 = vertices[triangles[i + 2]];
+
+                Vector3 normal = Vector3.Cross(v1 - v0, v2 - v0).normalized;
+                float angleToBack = Vector3.Angle(normal, Vector3.back);
+
+                float avgZ = (v0.z + v1.z + v2.z) / 3f;
+
+                if (angleToBack < thresholdAngle)
+                {
+                    if (avgZ < lowestZ + 0.1f)
+                    {
+                        bottomTriangles.Add(i);
+                        if (avgZ < lowestZ)
+                            lowestZ = avgZ;
+                    }
+                }
+            }
+
+            bool foundQuad = false;
+            Vector3[] quadVertices = null;
+            int[] quadTriangles = new int[6] { 0, 1, 2, 2, 3, 0 };
+
+            for (int i = 0; i < bottomTriangles.Count; i++)
+            {
+                int triA = bottomTriangles[i];
+
+                int a0 = triangles[triA];
+                int a1 = triangles[triA + 1];
+                int a2 = triangles[triA + 2];
+
+                for (int j = i + 1; j < bottomTriangles.Count; j++)
+                {
+                    int triB = bottomTriangles[j];
+
+                    int b0 = triangles[triB];
+                    int b1 = triangles[triB + 1];
+                    int b2 = triangles[triB + 2];
+
+                    int sharedCount = 0;
+                    HashSet<int> sharedVerts = new HashSet<int>();
+
+                    int[] aVerts = { a0, a1, a2 };
+                    int[] bVerts = { b0, b1, b2 };
+
+                    foreach (int aV in aVerts)
+                    {
+                        foreach (int bV in bVerts)
+                        {
+                            if (aV == bV)
+                            {
+                                sharedCount++;
+                                sharedVerts.Add(aV);
+                            }
+                        }
+                    }
+
+                    if (sharedCount == 2)
+                    {
+                        HashSet<int> quadVertIndices = new HashSet<int>(aVerts);
+                        quadVertIndices.UnionWith(bVerts);
+
+                        if (quadVertIndices.Count == 4)
+                        {
+                            quadVertices = new Vector3[4];
+                            int index = 0;
+                            foreach (int vi in quadVertIndices)
+                            {
+                                quadVertices[index++] = vertices[vi];
+                            }
+                            foundQuad = true;
+                            break;
+                        }
+                    }
+                }
+                if (foundQuad) break;
+            }
+
+            if (!foundQuad)
+            {
+                Debug.LogWarning("Dörtgen taban yüzeyi bulunamadı: " + original.name);
                 continue;
+            }
 
-            Mesh colliderMesh = meshCollider.sharedMesh;
-            Vector3[] localVertices = colliderMesh.vertices;
+            Mesh quadMesh = new Mesh();
+            quadMesh.vertices = quadVertices;
+            quadMesh.triangles = quadTriangles;
+            quadMesh.RecalculateNormals();
 
-            // Yeni GameObject oluştur (sadece 1 kopya)
-            GameObject copy = new GameObject(original.name + "_Copy");
-            copy.transform.SetParent(original.transform, false); // Child yap
+            GameObject copy = new GameObject(original.name + "_BottomQuad");
+            copy.transform.SetParent(original.transform, false);
             copy.transform.localPosition = Vector3.zero;
             copy.transform.localRotation = Quaternion.identity;
             copy.transform.localScale = Vector3.one;
 
-            // Mesh'i collider'dan al ama local vertexleri kullan
-            Mesh newMesh = new Mesh();
-            newMesh.vertices = localVertices;
-            newMesh.triangles = colliderMesh.triangles;
-            newMesh.RecalculateNormals();
-
-            // MeshFilter ve MeshRenderer ekle
             MeshFilter copyMF = copy.AddComponent<MeshFilter>();
-            copyMF.sharedMesh = newMesh;
+            copyMF.mesh = quadMesh;
 
             MeshRenderer copyMR = copy.AddComponent<MeshRenderer>();
-            Material whiteMat = new Material(Shader.Find("Standard"));
-            whiteMat.color = Color.white;
-            copyMR.material = whiteMat;
+            Material mat = new Material(Shader.Find("Standard")) { color = Color.yellow };
+            copyMR.material = mat;
         }
     }
 }
+
