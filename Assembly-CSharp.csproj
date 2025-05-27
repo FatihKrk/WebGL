@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Hide_n_UnHide.cs" />
     <Compile Include="Assets\Scripts\VisualQueryManager.cs" />
     <Compile Include="Assets\Scripts\ColliderSize.cs" />
+    <Compile Include="Assets\Faruk Work Space\SlopeControl.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\DragImage.cs" />
     <Compile Include="Assets\Scripts\ClippingController.cs" />
