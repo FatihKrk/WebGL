@@ -156,7 +156,7 @@ public class PathFinderManager : MonoBehaviour
 
             MeshRenderer copyMR = copy.AddComponent<MeshRenderer>();
             Material mat = new Material(Shader.Find("Unlit/Color"));
-            mat.color = Color.green;
+            mat.color = Color.white;
             mat.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
             copyMR.material = mat;
 
