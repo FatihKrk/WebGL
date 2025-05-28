@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\FarukBurakMermer\\WebGL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\FarukBurakMermer\\WebGL\\assets\\faruk work space\\pathfindermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|c:\\users\\farukburakmermer\\webgl\\assets\\faruk work space\\pathfindermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\faruk work space\\pathfindermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|c:\\users\\farukburakmermer\\webgl\\assets\\faruk work space\\slopecontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\faruk work space\\slopecontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\FarukBurakMermer\\WebGL\\Assets\\Faruk Work Space\\SlopeControl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Faruk Work Space\\SlopeControl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,8 +30,7 @@
               "RelativeToolTip": "Assets\\Faruk Work Space\\SlopeControl.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T12:36:15.934Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-21T12:36:15.934Z"
             },
             {
               "$type": "Document",
@@ -41,7 +40,7 @@
               "RelativeDocumentMoniker": "Assets\\Faruk Work Space\\PathFinderManager.cs",
               "ToolTip": "C:\\Users\\FarukBurakMermer\\WebGL\\Assets\\Faruk Work Space\\PathFinderManager.cs",
               "RelativeToolTip": "Assets\\Faruk Work Space\\PathFinderManager.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAcwDEAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAADoAAAAAAAAAAAAQwF4AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-21T06:50:32.18Z",
               "EditorCaption": ""

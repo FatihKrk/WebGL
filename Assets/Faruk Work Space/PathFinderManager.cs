@@ -17,6 +17,15 @@ public class PathFinderManager : MonoBehaviour
             MeshFilter mf = original.GetComponent<MeshFilter>();
             if (mf == null || mf.sharedMesh == null) continue;
 
+            // --- BURASI EKLENDİ ---
+            // Orijinal objenin ve varsa tüm child objelerin MeshCollider'larını kapat
+            MeshCollider[] colliders = original.GetComponentsInChildren<MeshCollider>(true);
+            foreach (MeshCollider col in colliders)
+            {
+                col.enabled = false;
+            }
+            // --- BURASI BİTTİ ---
+
             Mesh mesh = mf.sharedMesh;
             Vector3[] vertices = mesh.vertices;
             int[] triangles = mesh.triangles;
@@ -60,9 +69,10 @@ public class PathFinderManager : MonoBehaviour
                     int b2 = triangles[triB + 2];
 
                     int sharedCount = 0;
-                    HashSet<int> sharedVerts = new HashSet<int>();
                     int[] aVerts = { a0, a1, a2 };
                     int[] bVerts = { b0, b1, b2 };
+
+                    HashSet<int> sharedVerts = new HashSet<int>();
 
                     foreach (int aV in aVerts)
                     {
@@ -80,6 +90,7 @@ public class PathFinderManager : MonoBehaviour
                     {
                         HashSet<int> quadVertIndices = new HashSet<int>(aVerts);
                         quadVertIndices.UnionWith(bVerts);
+
                         if (quadVertIndices.Count == 4)
                         {
                             quadVertices = new Vector3[4];
@@ -102,24 +113,58 @@ public class PathFinderManager : MonoBehaviour
                 continue;
             }
 
-            Mesh quadMesh = new Mesh();
-            quadMesh.vertices = quadVertices;
-            quadMesh.triangles = new int[] { 0, 1, 2, 2, 3, 0 };
-            quadMesh.RecalculateNormals();
+            Vector3[] prismVertices = new Vector3[8];
+            for (int i = 0; i < 4; i++)
+            {
+                prismVertices[i] = quadVertices[i];
+                prismVertices[i + 4] = quadVertices[i] + new Vector3(0, 0, 0.01f);
+            }
 
-            GameObject copy = new GameObject(original.name + "_BottomQuad");
+            int[] prismTriangles = new int[]
+            {
+                0, 1, 2,
+                2, 3, 0,
+
+                4, 6, 5,
+                6, 4, 7,
+
+                0, 4, 5,
+                5, 1, 0,
+
+                1, 5, 6,
+                6, 2, 1,
+
+                2, 6, 7,
+                7, 3, 2,
+
+                3, 7, 4,
+                4, 0, 3
+            };
+
+            Mesh prismMesh = new Mesh();
+            prismMesh.vertices = prismVertices;
+            prismMesh.triangles = prismTriangles;
+            prismMesh.RecalculateNormals();
+
+            GameObject copy = new GameObject(original.name + "_BottomPrism");
             copy.transform.SetParent(original.transform, false);
 
+            copy.layer = LayerMask.NameToLayer("Ground");
+
             MeshFilter copyMF = copy.AddComponent<MeshFilter>();
-            copyMF.mesh = quadMesh;
+            copyMF.mesh = prismMesh;
 
             MeshRenderer copyMR = copy.AddComponent<MeshRenderer>();
-            Material mat = new Material(Shader.Find("Unlit/Color")); 
+            Material mat = new Material(Shader.Find("Unlit/Color"));
             mat.color = Color.green;
-            mat.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off); 
+            mat.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
             copyMR.material = mat;
 
-            //rend.enabled = false; // Orijinal objeyi kapat
+            MeshCollider copyCollider = copy.AddComponent<MeshCollider>();
+            copyCollider.sharedMesh = prismMesh;
+            copyCollider.convex = true;
+
+            rend.enabled = false; // Orijinal objeyi kapatmak istersen burayı açabilirsin
         }
     }
 }
