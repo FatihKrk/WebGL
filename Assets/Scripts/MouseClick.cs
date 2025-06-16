@@ -34,11 +34,13 @@ public class MouseClick : MonoBehaviour
     List<GameObject> objects = new List<GameObject>();
     public Vector3 pozisyon;
     MeshRenderer[] selectedItems;
+    [SerializeField] private VisualQueryManager visualQueryManager;
     
     // Start is called before the first frame update
     void Start()
     {
         parentObject = GameObject.FindGameObjectWithTag("ParentObject");
+
         MeshRenderer[] allChilds = parentObject.GetComponentsInChildren<MeshRenderer>(true);
         foreach(MeshRenderer mesh in allChilds)
         {
@@ -62,11 +64,6 @@ public class MouseClick : MonoBehaviour
         {
             // Bellek sınırı aşılmamışsa işlemleri sürdür
             PerformHeavyOperations();
-        }
-        else
-        {
-            Resources.UnloadUnusedAssets();
-            GC.Collect();
         }
 
         //İki kere tıklamayı algılama
@@ -560,97 +557,62 @@ public class MouseClick : MonoBehaviour
         }
         if(expandingObject.transform.parent == null) objects.Add(expandingObject);
     }
+    private Dictionary<Renderer, MaterialPropertyBlock> originalBlocks = new Dictionary<Renderer, MaterialPropertyBlock>();
+    private Dictionary<Renderer, Color> originalColors = new Dictionary<Renderer, Color>();
 
-    Dictionary<Renderer, Color> originalColors = new Dictionary<Renderer, Color>();
-    Dictionary<Renderer, Color> visualQueryColors = new Dictionary<Renderer, Color>();
-    // Materyalleri değiştir
     public void ChangeColor()
     {
-        HashSet<Renderer> processedRenderers = new HashSet<Renderer>();
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        if(moveButtons.visualQuery)
+        if (selectedItems == null || selectedItems.Length == 0) return;
+
+        var highlightBlock = new MaterialPropertyBlock();
+        highlightBlock.SetFloat("_UseOverrideColor", 1f);
+        highlightBlock.SetColor("_OverrideColor", Color.blue);
+
+        foreach (Renderer renderer in selectedItems)
         {
-            foreach (Renderer renderer in selectedItems)
+            // VisualQueryManager'ın kontrolü altındaysa işlem yapma
+            if (moveButtons.visualQuery && visualQueryManager != null && 
+                visualQueryManager.originalBlocks.ContainsKey(renderer))
             {
-                renderer.GetPropertyBlock(block);
-                if (!visualQueryColors.ContainsKey(renderer))
-                {
-                    visualQueryColors[renderer] = block.GetColor("_Color");
-                }
-                block.SetColor("_Color", Color.blue);
-                renderer.SetPropertyBlock(block);
-                processedRenderers.Add(renderer);
+                renderer.SetPropertyBlock(highlightBlock);
             }
-        }
-        else
-        {
-            foreach (Renderer renderer in selectedItems)
+
+            // Orijinal değerleri kaydet
+            if (!originalBlocks.ContainsKey(renderer))
             {
+                var block = new MaterialPropertyBlock();
                 renderer.GetPropertyBlock(block);
-                if (!originalColors.ContainsKey(renderer))
-                {
-                    originalColors[renderer] = renderer.material.color;
-                }
-                block.SetColor("_Color", Color.blue);
-                renderer.SetPropertyBlock(block);
-                processedRenderers.Add(renderer);
+                originalBlocks[renderer] = block;
             }
+            if (!originalColors.ContainsKey(renderer))
+            {
+                originalColors[renderer] = renderer.material.color;
+            }
+
+            renderer.SetPropertyBlock(highlightBlock);
         }
     }
 
-    // Materyalleri eski haline döndür
     public void ChangeColorBack()
     {
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        HashSet<Renderer> processedRenderers = new HashSet<Renderer>();
-        if (clickedItems != null)
-        {
-            foreach (GameObject obj in clickedItems)
-            {
-                // FindChildrens fonksiyonunu çağır
-                FindChildrens(obj);
-            }
-        }
-        if(moveButtons.visualQuery)
-        {
-            foreach (var entry in visualQueryColors)
-            {
-                Renderer item = entry.Key;
-                Color originalColor = entry.Value;
+        if (selectedItems == null || selectedItems.Length == 0) return;
 
-                MeshRenderer[] renderers = item.GetComponentsInChildren<MeshRenderer>(true);
-                foreach (var renderer in renderers)
-                {
-                    renderer.GetPropertyBlock(block);
-                    if (!processedRenderers.Contains(renderer))
-                    {
-                        processedRenderers.Add(renderer);
-                    }
-                    block.SetColor("_Color", originalColor);
-                    renderer.SetPropertyBlock(block);
-                }
-            }
-        }
-        else
+        foreach (Renderer renderer in selectedItems)
         {
-            foreach (var entry in originalColors)
+            // VisualQueryManager'ın kontrolü altındaysa işlem yapma
+            if (moveButtons.visualQuery && visualQueryManager != null && 
+                visualQueryManager.originalBlocks.ContainsKey(renderer))
             {
-                Renderer item = entry.Key;
-                Color originalColor = entry.Value;
-
-                MeshRenderer[] renderers = item.GetComponentsInChildren<MeshRenderer>(true);
-                foreach (var renderer in renderers)
-                {
-                    renderer.GetPropertyBlock(block);
-                    if (!processedRenderers.Contains(renderer))
-                    {
-                        processedRenderers.Add(renderer);
-                    }
-                    block.SetColor("_Color", originalColor);
-                    renderer.SetPropertyBlock(block);
-                }
+                var visualQueryBlock = visualQueryManager.originalBlocks[renderer];
+                renderer.SetPropertyBlock(visualQueryBlock);
+            }
+            else if (originalBlocks.TryGetValue(renderer, out var originalBlock))
+            {
+                renderer.SetPropertyBlock(originalBlock);
             }
         }
+        
+        selectedItems = null;
     }
 
     //Objeye tıklandığında hiyerarşide sayfaların açılması

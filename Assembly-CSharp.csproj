@@ -120,6 +120,7 @@
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\Shaders\ClippingOpaque.shader" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Shaders\ColorOverride.compute" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -130,7 +131,6 @@
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\LoadingBarShader.shader" />
-    <None Include="Assets\Shaders\ColorAssigner.compute" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Packages\FlexibleColorPicker\Materials\FCP_Gradient.shader" />
     <None Include="Assets\Packages\Battlehub\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />

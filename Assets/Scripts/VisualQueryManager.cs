@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
 public class VisualQueryManager : MonoBehaviour
 {
@@ -26,31 +27,22 @@ public class VisualQueryManager : MonoBehaviour
         public List<string> names;
     }
 
-    void Start()
+    private Dictionary<string, List<Transform>> _nameCache;
+
+    void Awake()
     {
         first_Parent = GameObject.FindGameObjectWithTag("ParentObject");
-        CacheAllObjects();
-        StartCoroutine(GetData());
-        itemPanelSlider = itemPanel.GetComponentInChildren<Slider>();
-        itemPanelSlider.onValueChanged.AddListener(ChangeItemColors);
-        groupPanelSlider = groupPanel.GetComponentInChildren<Slider>();
-        slider = mainPanel.GetComponentInChildren<Slider>();
-        slider.onValueChanged.AddListener(OnSliderValueChanged);
+        BuildNameCache();
     }
 
-    void CacheAllObjects()
+    void Start()
     {
-        foreach (MeshRenderer renderer in first_Parent.GetComponentsInChildren<MeshRenderer>(true))
-        {
-            if (!cachedItems.ContainsKey(renderer.name))
-            {
-                cachedItems[renderer.name] = renderer.transform;
-            }
-            if (!originalColors.ContainsKey(renderer))
-            {
-                originalColors[renderer] = renderer.material.color;
-            }
-        }
+        StartCoroutine(GetData());
+        itemPanelSlider = itemPanel.GetComponentInChildren<Slider>(true);
+        itemPanelSlider.onValueChanged.AddListener(ChangeItemColors);
+        groupPanelSlider = groupPanel.GetComponentInChildren<Slider>(true);
+        slider = mainPanel.GetComponentInChildren<Slider>(true);
+        slider.onValueChanged.AddListener(OnSliderValueChanged);
     }
 
     public Color GetColor(int id)
@@ -117,11 +109,12 @@ public class VisualQueryManager : MonoBehaviour
         {
             Debug.LogError("Hata: " + request.error);
         }
-        loadingPanel.SetActive(false);
+        BuildTransformGroupCache();
     }
 
     IEnumerator InstantiateGroups()
     {
+
         TMP_Text[] groupTexts = groupPrefab.GetComponentsInChildren<TMP_Text>();
 
         // UI'ye toplam grup sayısını yaz
@@ -149,9 +142,11 @@ public class VisualQueryManager : MonoBehaviour
 
             i++;
             Instantiate(groupPrefab, groupPanelContent.transform);
+
             yield return null;
         }
     }
+
 
     private void OnSliderValueChanged(float value)
     {
@@ -246,168 +241,176 @@ public class VisualQueryManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-    }
-    Dictionary<Renderer, Color> originalColors = new Dictionary<Renderer, Color>();
+    }  
     private Color grayColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, 0.60f);
 
     public void ChangeColorFonk()
     {
         loadingPanel.SetActive(true);
-        StartCoroutine(ChangeColor());
+        StartCoroutine(InitializeColorSystem());
     }
 
-    IEnumerator ChangeColor()
+    public Dictionary<Renderer, MaterialPropertyBlock> originalBlocks = new Dictionary<Renderer, MaterialPropertyBlock>();
+    private Dictionary<string, MaterialPropertyBlock> colorBlocks = new Dictionary<string, MaterialPropertyBlock>();
+    private HashSet<string> allGroupNames;
+    private MaterialPropertyBlock grayBlock;
+
+    IEnumerator InitializeColorSystem()
     {
-        int i = 0;
-        int batchSize = 0;
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        HashSet<Renderer> processedRenderers = new HashSet<Renderer>();
+        // Tüm renderer'ların orijinal değerlerini kaydet
+        var allRenderers = first_Parent.GetComponentsInChildren<MeshRenderer>(true);
+        allGroupNames = new HashSet<string>(groupedData.SelectMany(g => g.Value));
 
-        // İlk başta tüm renderer'ları cache'leyelim
-        MeshRenderer[] allFirstParentRenderers = first_Parent.GetComponentsInChildren<MeshRenderer>(true);
+        // Gri blok ve grup renk bloklarını oluştur
+        grayBlock = new MaterialPropertyBlock();
+        grayBlock.SetFloat("_UseOverrideColor", 1f);
+        grayBlock.SetColor("_OverrideColor", grayColor);
+        
+        for (int i = 0; i < groupedData.Count; i++)
+        {
+            var group = groupedData.ElementAt(i);
+            var block = new MaterialPropertyBlock();
+            block.SetFloat("_UseOverrideColor", 1f);
+            block.SetColor("_OverrideColor", GetColor(i));
+            colorBlocks[group.Key] = block;
+        }
 
+        yield return null;
+        StartCoroutine(ChangeColorWithClipping());
+    }
+
+    IEnumerator ChangeColorWithClipping()
+    {
+        loadingPanel.SetActive(true);
+
+        var allRenderers = first_Parent.GetComponentsInChildren<MeshRenderer>(true);
+
+        foreach (var renderer in allRenderers)
+        {
+            if (transformToGroupMap.ContainsKey(renderer.transform))
+                continue;
+
+            if (!originalBlocks.ContainsKey(renderer))
+            {
+                var block = new MaterialPropertyBlock();
+                renderer.GetPropertyBlock(block);
+                originalBlocks[renderer] = block;
+            }
+            renderer.SetPropertyBlock(grayBlock);
+        }
+
+        foreach (var kvp in transformToGroupMap)
+        {
+            Transform t = kvp.Key;
+            string groupName = kvp.Value;
+
+            if (!colorBlocks.TryGetValue(groupName, out var colorBlock))
+                continue;
+
+            MeshRenderer[] renderers = t.GetComponentsInChildren<MeshRenderer>(true);
+
+            foreach (var renderer in renderers)
+            {
+                if (!originalBlocks.ContainsKey(renderer))
+                {
+                    var block = new MaterialPropertyBlock();
+                    renderer.GetPropertyBlock(block);
+                    originalBlocks[renderer] = block;
+                }
+                renderer.SetPropertyBlock(colorBlock);
+            }
+        }
+
+        yield return null;
+        loadingPanel.SetActive(false);
+    }
+
+
+    Dictionary<Transform, string> transformToGroupMap = new Dictionary<Transform, string>();
+
+    void BuildTransformGroupCache()
+    {
         foreach (var group in groupedData)
         {
             string groupName = group.Key;
-            List<string> names = group.Value;
-            Color groupColor = GetColor(i);
-
-            foreach (var name in names)
+            foreach (var objectName in group.Value)
             {
-                Transform item = GetOrCacheItem(name);
-                if (item != null)
-                {
-                    foreach (var renderer in item.GetComponentsInChildren<MeshRenderer>(true))
-                    {
-                        renderer.GetPropertyBlock(block);
-                        SetRendererColor(renderer, groupColor, block);
-                        processedRenderers.Add(renderer);
-                        batchSize++;
+                Transform objTransform = Search(objectName);
+                if (objTransform == null) continue;
 
-                        if (batchSize >= 250)
-                        {
-                            batchSize = 0;
-                            yield return null;  // İşlem arası vererek yükü dağıtıyoruz
-                        }
-                    }
-                }
-            }
-            i++;
-        }
-
-        // İlk parent'teki işlenmemiş renderer'ları griye çevir
-        foreach (var renderer in allFirstParentRenderers)
-        {
-            if (!processedRenderers.Contains(renderer))
-            {
-                renderer.GetPropertyBlock(block);
-                SetRendererColor(renderer, grayColor, block);
-            }
-
-            batchSize++;
-            if (batchSize >= 250)
-            {
-                batchSize = 0;
-                yield return null;  // İşlem arası vererek yükü dağıtıyoruz
+                // Objeyi ve alt tüm çocuklarını gruba ata
+                AssignGroupRecursive(objTransform, groupName);
             }
         }
+    }
 
-        // UI slider değerlerini sıfırlama işlemi
-        foreach (Slider slider in groupPanel.GetComponentsInChildren<Slider>())
-        {
-            slider.value = 1;
-        }
+    void AssignGroupRecursive(Transform t, string groupName)
+    {
+        if (!transformToGroupMap.ContainsKey(t))
+            transformToGroupMap[t] = groupName;
 
-        // Yükleme panelini gizleme
         loadingPanel.SetActive(false);
     }
 
-    private void SetRendererColor(Renderer renderer, Color color, MaterialPropertyBlock block)
-    {
-        renderer.GetPropertyBlock(block);
-        block.SetColor("_Color", color);
-        renderer.SetPropertyBlock(block);
-    }
-
-    Dictionary<string, Transform> cachedItems = new Dictionary<string, Transform>();
-
-    Transform GetOrCacheItem(string name)
-    {
-        if (!cachedItems.ContainsKey(name))
-        {
-            Transform item = Search(name);
-            cachedItems[name] = item;
-        }
-        return cachedItems[name];
-    }
-
-    // Renkleri eski haline döndüren fonksiyon
-    public void ResetColors()
+    public void ResetColorsWithClipping()
     {
         loadingPanel.SetActive(true);
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-
-        foreach (var kvp in originalColors)
+        
+        foreach (var renderer in originalBlocks.Keys)
         {
-            Renderer renderer = kvp.Key;
-            Color originalColor = kvp.Value;
-
-            renderer.GetPropertyBlock(block);
-            block.SetColor("_Color", originalColor);
+            var block = new MaterialPropertyBlock();
+            block.Clear(); // override'ları temizle
             renderer.SetPropertyBlock(block);
         }
-
-        foreach (Slider slider in groupPanelContent.GetComponentsInChildren<Slider>())
-        {
-            slider.value = 0;
-        }
-
+        originalBlocks.Clear();
+        colorBlocks.Clear();
         loadingPanel.SetActive(false);
+    }
+
+    void BuildNameCache()
+    {
+        _nameCache = new Dictionary<string, List<Transform>>(System.StringComparer.OrdinalIgnoreCase);
+        Transform[] allTransforms = first_Parent.GetComponentsInChildren<Transform>(true);
+        
+        foreach (Transform t in allTransforms)
+        {
+            if (!_nameCache.ContainsKey(t.name))
+            {
+                _nameCache[t.name] = new List<Transform>();
+            }
+            _nameCache[t.name].Add(t);
+        }
+    }
+
+    public Transform Search(string searchedText)
+    {
+        if (string.IsNullOrEmpty(searchedText)) return null;
+        if (_nameCache == null) BuildNameCache(); // Cache yoksa yeniden oluştur
+        if (_nameCache.TryGetValue(searchedText, out List<Transform> transforms) && transforms.Count > 0) {
+            return transforms[0];
+        }
+        return null;
     }
 
 
     public void ChangeGroupsColor()
     {
-        if(groupPanelSlider.value == 0)
+        if (groupPanelSlider.value == 0)
         {
-            foreach(Slider slider in groupPanelContent.GetComponentsInChildren<Slider>())
+            foreach (Slider slider in groupPanelContent.GetComponentsInChildren<Slider>())
             {
                 slider.value = 0;
             }
         }
-        if(groupPanelSlider.value == 1)
+        if (groupPanelSlider.value == 1)
         {
-            foreach(Slider slider in groupPanelContent.GetComponentsInChildren<Slider>())
+            foreach (Slider slider in groupPanelContent.GetComponentsInChildren<Slider>())
             {
                 slider.value = 1;
             }
         }
     }
 
-    public Transform Search(string searched_Text)
-    {
-        Stack<Transform> stack = new Stack<Transform>();
-        stack.Push(first_Parent.transform);
-
-        while (stack.Count > 0)
-        {
-            var current = stack.Pop();
-
-            // Objeyi adıyla karşılaştırıyoruz
-            if (current.name.IndexOf(searched_Text, System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return current; // Objeyi bulduktan sonra hemen geri dön
-            }
-
-            // İlk olarak child'ları stack'e tersten ekleyerek önce ilk child'ın işlenmesini sağlıyoruz
-            for (int i = current.childCount - 1; i >= 0; i--)
-            {
-                stack.Push(current.GetChild(i));
-            }
-        }
-
-        return null; // Eğer obje bulunamazsa null döner
-    }
 
     private void ChangeItemColors(float value)
     {

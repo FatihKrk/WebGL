@@ -16,10 +16,10 @@ public class PrefabManager : MonoBehaviour
 
     void Start()
     {
-        visualQueryManager = GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<VisualQueryManager>();
-        objectText = gameObject.GetComponentInChildren<TMP_Text>();
+        visualQueryManager = GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<VisualQueryManager>(true);
+        objectText = gameObject.GetComponentInChildren<TMP_Text>(true);
         first_Parent = GameObject.FindGameObjectWithTag("ParentObject");
-        slider = gameObject.GetComponentInChildren<Slider>();
+        slider = gameObject.GetComponentInChildren<Slider>(true);
         slider.onValueChanged.AddListener(OnSliderValueChanged);
     }
 
@@ -52,7 +52,7 @@ public class PrefabManager : MonoBehaviour
     public void OnOffObjects()
     {
         visualQueryManager.loadingPanel.SetActive(true);
-        objectText = gameObject.GetComponentInChildren<TMP_Text>();
+        objectText = gameObject.GetComponentInChildren<TMP_Text>(true);
         
         if(slider.value == 1)
         {
@@ -81,19 +81,21 @@ public class PrefabManager : MonoBehaviour
             string groupName = group.Key;
             List<string> names = group.Value;
             Color groupColor = GetColor(i);
-            if(objectText.text == groupName)
+
+            if (objectText.text == groupName)
             {
                 foreach (var name in names)
                 {
-                    Transform item = GetOrCacheItem(name);
+                    Transform item = Search(name);
                     if (item != null)
                     {
                         foreach (var renderer in item.GetComponentsInChildren<MeshRenderer>(true))
                         {
                             renderer.GetPropertyBlock(block);
-                            if(block.GetColor("_Color") == groupColor)
+
+                            if (block.GetColor("_OverrideColor") == groupColor)
                             {
-                                SetRendererColor(renderer, grayColor, block);
+                                SetRendererOverrideColor(renderer, grayColor, block);
                                 processedRenderers.Add(renderer);
                             }
                         }
@@ -104,14 +106,8 @@ public class PrefabManager : MonoBehaviour
             i++;
             yield return null;
         }
-        visualQueryManager.loadingPanel.SetActive(false);
-    }
 
-    private void SetRendererColor(Renderer renderer, Color color, MaterialPropertyBlock block)
-    {
-        renderer.GetPropertyBlock(block);
-        block.SetColor("_Color", color);
-        renderer.SetPropertyBlock(block);
+        visualQueryManager.loadingPanel.SetActive(false);
     }
 
     void ResetColor()
@@ -125,17 +121,18 @@ public class PrefabManager : MonoBehaviour
             string groupName = group.Key;
             List<string> names = group.Value;
             Color groupColor = GetColor(i);
-            if(objectText.text == groupName)
+
+            if (objectText.text == groupName)
             {
                 foreach (var name in names)
                 {
-                    Transform item = GetOrCacheItem(name);
+                    Transform item = Search(name);
                     if (item != null)
                     {
                         foreach (var renderer in item.GetComponentsInChildren<MeshRenderer>(true))
                         {
                             renderer.GetPropertyBlock(block);
-                            SetRendererColor(renderer, groupColor, block);
+                            SetRendererOverrideColor(renderer, groupColor, block);
                             processedRenderers.Add(renderer);
                         }
                     }
@@ -144,44 +141,44 @@ public class PrefabManager : MonoBehaviour
             }
             i++;
         }
+
         visualQueryManager.loadingPanel.SetActive(false);
     }
 
-    Dictionary<string, Transform> cachedItems = new Dictionary<string, Transform>();
+private void SetRendererOverrideColor(Renderer renderer, Color color, MaterialPropertyBlock block)
+{
+    renderer.GetPropertyBlock(block);
+    block.SetFloat("_UseOverrideColor", 1f);
+    block.SetColor("_OverrideColor", color);
+    renderer.SetPropertyBlock(block);
+}
 
-    Transform GetOrCacheItem(string name)
+
+    private Dictionary<string, List<Transform>> _nameCache;
+
+    void BuildNameCache()
     {
-        if (!cachedItems.ContainsKey(name))
+        _nameCache = new Dictionary<string, List<Transform>>(System.StringComparer.OrdinalIgnoreCase);
+        Transform[] allTransforms = first_Parent.GetComponentsInChildren<Transform>(true);
+        
+        foreach (Transform t in allTransforms)
         {
-            Transform item = Search(name);
-            cachedItems[name] = item;
+            if (!_nameCache.ContainsKey(t.name))
+            {
+                _nameCache[t.name] = new List<Transform>();
+            }
+            _nameCache[t.name].Add(t);
         }
-        return cachedItems[name];
     }
 
-    public Transform Search(string searched_Text)
+    public Transform Search(string searchedText)
     {
-        Stack<Transform> stack = new Stack<Transform>();
-        stack.Push(first_Parent.transform);
-
-        while (stack.Count > 0)
-        {
-            var current = stack.Pop();
-
-            // Objeyi adıyla karşılaştırıyoruz
-            if (current.name.IndexOf(searched_Text, System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return current; // Objeyi bulduktan sonra hemen geri dön
-            }
-
-            // İlk olarak child'ları stack'e tersten ekleyerek önce ilk child'ın işlenmesini sağlıyoruz
-            for (int i = current.childCount - 1; i >= 0; i--)
-            {
-                stack.Push(current.GetChild(i));
-            }
+        if (string.IsNullOrEmpty(searchedText)) return null;
+        if (_nameCache == null) BuildNameCache(); // Cache yoksa yeniden oluştur
+        if (_nameCache.TryGetValue(searchedText, out List<Transform> transforms) && transforms.Count > 0) {
+            return transforms[0];
         }
-
-        return null; // Eğer obje bulunamazsa null döner
+        return null;
     }
     
     public void InstantiateItems(GameObject text)

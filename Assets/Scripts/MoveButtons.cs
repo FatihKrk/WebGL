@@ -199,14 +199,14 @@ public class MoveButtons : MonoBehaviour
             {
                 visualQueryManager.groupPanel.SetActive(false);
                 visualQueryManager.DestroyGroupChildren();
-                visualQueryManager.ResetColors();
+                visualQueryManager.ResetColorsWithClipping();
             }
             else if(visualQueryManager.itemPanel.activeInHierarchy)
             {
                 visualQueryManager.itemPanel.SetActive(false);
                 visualQueryManager.DestroyGroupChildren();
                 visualQueryManager.DestroyItemChildren();
-                visualQueryManager.ResetColors();
+                visualQueryManager.ResetColorsWithClipping();
             }
             visualQuery = false;
         }
