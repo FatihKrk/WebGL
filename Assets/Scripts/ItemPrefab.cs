@@ -15,11 +15,12 @@ public class ItemPrefab : MonoBehaviour
     private Dictionary<int, Color> colorDictionary = new Dictionary<int, Color>();
     
     private Color grayColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, 0.60f);
+    private MaterialPropertyBlock grayBlock;
 
     void Start()
     {
         visualQueryManager = GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<VisualQueryManager>();
-        mouseClick = GameObject.Find("Main Camera").GetComponentInChildren<MouseClick>();
+        mouseClick = GameObject.Find("MainCamera").GetComponentInChildren<MouseClick>();
         first_Parent = GameObject.FindGameObjectWithTag("ParentObject");
         itemPanel = GameObject.Find("ByItemNamePanel");
         slider = gameObject.GetComponentInChildren<Slider>(true);
@@ -62,7 +63,7 @@ public class ItemPrefab : MonoBehaviour
 
         if (selectedItem != null)
         {
-            if (slider.value == 0) OffItem();
+            if (slider.value == 0)  OffItem();
             else if (slider.value == 1) OnItem();
         }
     }
@@ -77,13 +78,19 @@ public class ItemPrefab : MonoBehaviour
         {
             mouseClick.currentObject = selectedItem.gameObject;
             mouseClick.FindItemPosition();
-            StartCoroutine(mouseClick.FindParents(mouseClick.currentObject));
-            StartCoroutine(mouseClick.Expand());
-
-            if (mouseClick.attributes_Panel.activeSelf)
-                mouseClick.ShowAttributes();
+            StartCoroutine(SelectItemRoutine());
         }
     }
+
+    private IEnumerator SelectItemRoutine()
+    {
+        yield return StartCoroutine(mouseClick.FindParents(mouseClick.currentObject));
+        yield return StartCoroutine(mouseClick.Expand());
+
+        if (mouseClick.attributes_Panel.activeSelf)
+            mouseClick.ShowAttributes();
+    }
+
 
     public Transform Search(string searched_Text)
     {
@@ -104,8 +111,9 @@ public class ItemPrefab : MonoBehaviour
 
     void ChangeColor()
     {
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        HashSet<Renderer> processedRenderers = new HashSet<Renderer>();
+        grayBlock = new MaterialPropertyBlock();
+        grayBlock.SetFloat("_UseOverrideColor", 1f);
+        grayBlock.SetColor("_OverrideColor", grayColor);
         Color groupColor = Color.grey;
 
         foreach (var group in visualQueryManager.groupColors)
@@ -121,13 +129,8 @@ public class ItemPrefab : MonoBehaviour
         {
             foreach (var renderer in selectedItem.GetComponentsInChildren<MeshRenderer>(true))
             {
-                renderer.GetPropertyBlock(block);
-
-                if (block.GetColor("_OverrideColor") == groupColor)
-                {
-                    SetRendererOverrideColor(renderer, grayColor, block);
-                    processedRenderers.Add(renderer);
-                }
+                visualQueryManager.changedBlocks[renderer] = grayBlock;
+                renderer.SetPropertyBlock(grayBlock);
             }
         }
 
@@ -136,7 +139,10 @@ public class ItemPrefab : MonoBehaviour
 
     void ResetColor()
     {
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
+        MaterialPropertyBlock groupblock = new MaterialPropertyBlock();
+        groupblock = new MaterialPropertyBlock();
+        groupblock.SetFloat("_UseOverrideColor", 1f);
+        
         HashSet<Renderer> processedRenderers = new HashSet<Renderer>();
         Color groupColor = Color.grey;
 
@@ -150,8 +156,9 @@ public class ItemPrefab : MonoBehaviour
                 {
                     foreach (var renderer in selectedItem.GetComponentsInChildren<MeshRenderer>(true))
                     {
-                        renderer.GetPropertyBlock(block);
-                        SetRendererOverrideColor(renderer, groupColor, block);
+                        groupblock.SetColor("_OverrideColor", groupColor);
+                        visualQueryManager.changedBlocks[renderer] = groupblock;
+                        renderer.SetPropertyBlock(groupblock);
                         processedRenderers.Add(renderer);
                     }
                 }

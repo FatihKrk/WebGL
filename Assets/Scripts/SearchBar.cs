@@ -66,7 +66,7 @@ public class SearchBar : MonoBehaviour
             if(searchedObjects.Count != 0)
             {
                 mouseClick.currentObject = searchedObjects[objQueue].gameObject;
-                mouseClick.Search();
+                StartCoroutine(mouseClick.Search());
             }
             else StartCoroutine(Notification());
         }
@@ -76,7 +76,7 @@ public class SearchBar : MonoBehaviour
             if(searchedObjects.Count > objQueue)
             {
                 mouseClick.currentObject = searchedObjects[objQueue].gameObject;
-                mouseClick.Search();
+                StartCoroutine(mouseClick.Search());
             }
             else StartCoroutine(Notification());
         }

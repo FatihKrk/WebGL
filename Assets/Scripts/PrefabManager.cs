@@ -13,6 +13,7 @@ public class PrefabManager : MonoBehaviour
     Slider slider;
     TMP_Text objectText;
     private Dictionary<int, Color> colorDictionary = new Dictionary<int, Color>();
+    private MaterialPropertyBlock grayBlock;
 
     void Start()
     {
@@ -73,8 +74,9 @@ public class PrefabManager : MonoBehaviour
     IEnumerator ChangeColor()
     {
         int i = 0;
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        HashSet<Renderer> processedRenderers = new HashSet<Renderer>();
+        grayBlock = new MaterialPropertyBlock();
+        grayBlock.SetFloat("_UseOverrideColor", 1f);
+        grayBlock.SetColor("_OverrideColor", grayColor);
 
         foreach (var group in visualQueryManager.groupedData)
         {
@@ -91,13 +93,8 @@ public class PrefabManager : MonoBehaviour
                     {
                         foreach (var renderer in item.GetComponentsInChildren<MeshRenderer>(true))
                         {
-                            renderer.GetPropertyBlock(block);
-
-                            if (block.GetColor("_OverrideColor") == groupColor)
-                            {
-                                SetRendererOverrideColor(renderer, grayColor, block);
-                                processedRenderers.Add(renderer);
-                            }
+                            visualQueryManager.changedBlocks[renderer] = grayBlock;
+                            renderer.SetPropertyBlock(grayBlock);
                         }
                     }
                 }
@@ -113,8 +110,9 @@ public class PrefabManager : MonoBehaviour
     void ResetColor()
     {
         int i = 0;
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        HashSet<Renderer> processedRenderers = new HashSet<Renderer>();
+        MaterialPropertyBlock groupblock = new MaterialPropertyBlock();
+        groupblock = new MaterialPropertyBlock();
+        groupblock.SetFloat("_UseOverrideColor", 1f);
 
         foreach (var group in visualQueryManager.groupedData)
         {
@@ -131,9 +129,9 @@ public class PrefabManager : MonoBehaviour
                     {
                         foreach (var renderer in item.GetComponentsInChildren<MeshRenderer>(true))
                         {
-                            renderer.GetPropertyBlock(block);
-                            SetRendererOverrideColor(renderer, groupColor, block);
-                            processedRenderers.Add(renderer);
+                            groupblock.SetColor("_OverrideColor", groupColor);
+                            visualQueryManager.changedBlocks[renderer] = groupblock;
+                            renderer.SetPropertyBlock(groupblock);
                         }
                     }
                 }

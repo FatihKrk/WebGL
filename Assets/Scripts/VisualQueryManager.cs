@@ -251,6 +251,7 @@ public class VisualQueryManager : MonoBehaviour
     }
 
     public Dictionary<Renderer, MaterialPropertyBlock> originalBlocks = new Dictionary<Renderer, MaterialPropertyBlock>();
+    public Dictionary<Renderer, MaterialPropertyBlock> changedBlocks = new Dictionary<Renderer, MaterialPropertyBlock>();
     private Dictionary<string, MaterialPropertyBlock> colorBlocks = new Dictionary<string, MaterialPropertyBlock>();
     private HashSet<string> allGroupNames;
     private MaterialPropertyBlock grayBlock;
@@ -311,16 +312,27 @@ public class VisualQueryManager : MonoBehaviour
 
             foreach (var renderer in renderers)
             {
+                // Eğer renderer'ın transform'u başka bir grubun ana objesi olarak geçiyorsa, atla
+                if (transformToGroupMap.ContainsKey(renderer.transform) && renderer.transform != t)
+                    continue;
+
                 if (!originalBlocks.ContainsKey(renderer))
                 {
                     var block = new MaterialPropertyBlock();
                     renderer.GetPropertyBlock(block);
                     originalBlocks[renderer] = block;
                 }
+
                 renderer.SetPropertyBlock(colorBlock);
+
+                if (!changedBlocks.ContainsKey(renderer))
+                {
+                    var block = new MaterialPropertyBlock();
+                    renderer.GetPropertyBlock(block);
+                    changedBlocks[renderer] = block;
+                }
             }
         }
-
         yield return null;
         loadingPanel.SetActive(false);
     }

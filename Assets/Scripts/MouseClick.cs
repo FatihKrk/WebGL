@@ -28,8 +28,7 @@ public class MouseClick : MonoBehaviour
     private float timer = 0.2f , sendBtnTimer;
     private bool doubleClick, doubleClickable, canMove, single, multiple, singleObject, canStartTimer, expanded;
     public bool isOverUI, multiSelect, hideActive, moveUntilArrive;
-    public GameObject currentObject, panel, colorChangePanel, attributes_Panel, parentObject;
-    [SerializeField] GameObject clickedObject;
+    public GameObject currentObject, panel, colorChangePanel, attributes_Panel, parentObject, clickedObject;
     public List<GameObject> clickedItems = new List<GameObject>();
     List<GameObject> objects = new List<GameObject>();
     public Vector3 pozisyon;
@@ -165,7 +164,6 @@ public class MouseClick : MonoBehaviour
             ChangeColor();
             ScrollFocus();
             searchBar.loadingPanel.gameObject.SetActive(false);
-            objects.Clear();
             treeView.canFocus = false;
             if(attributes_Panel.activeSelf)
             {
@@ -216,7 +214,7 @@ public class MouseClick : MonoBehaviour
             }
             else
             {
-                if(!isOverUI && Input.GetMouseButtonDown(0) && moveButtons.select)
+                if(!isOverUI && Input.GetMouseButtonDown(0) && moveButtons.select && !moveButtons.section && currentObject != null)
                 {
                     ChangeColorBack();
                     selectedItems = parentObject.GetComponentsInChildren<MeshRenderer>();
@@ -418,7 +416,7 @@ public class MouseClick : MonoBehaviour
         searchBar.loadingPanel.gameObject.SetActive(true);
         yield return StartCoroutine(FindParents(obj));
 
-        currentObject = objects[objects.Count - 6];
+        currentObject = objects[1];
         objects.Clear();
 
         yield return StartCoroutine(FindParents(currentObject));
@@ -435,9 +433,6 @@ public class MouseClick : MonoBehaviour
         }
     }
 
-
-
-    //Tıklanılan objeyi gösterme
     public void SingleObject()
     {
         if (currentObject != clickedObject)
@@ -446,22 +441,30 @@ public class MouseClick : MonoBehaviour
             {
                 ChangeColorBack();
             }
+
             panel.SetActive(false);
             currentObject = clickedObject;
             objects.Clear();
-            StartCoroutine(FindParents(currentObject));
-            FindPosition();
-            StartCoroutine(Expand());
+            StartCoroutine(SingleObjectRoutine());
             selectedItems = currentObject.GetComponents<MeshRenderer>();
-            //treeView.SelectedItem = currentObject;
-            ChangeColor();
+            
             singleObject = false;
-            if(attributes_Panel.activeSelf)
+
+            if (attributes_Panel.activeSelf)
             {
                 ShowAttributes();
             }
         }
     }
+
+    private IEnumerator SingleObjectRoutine()
+    {
+        yield return StartCoroutine(FindParents(currentObject));
+        yield return StartCoroutine(Expand());
+        FindPosition();
+        ChangeColor();
+    }
+
 
     public void FindItemPosition()
     {
@@ -505,11 +508,12 @@ public class MouseClick : MonoBehaviour
         }
     }
 
-    public void Search()
+    public IEnumerator Search()
     {
         objects.Clear();
-        StartCoroutine(FindParents(currentObject));
-        StartCoroutine(Expand());
+        yield return StartCoroutine(FindParents(currentObject));
+        FindPosition();
+        yield return StartCoroutine(Expand());
     }
 
     //Çift tıklanıldığında kamerayı objeye yakınlaştırma
@@ -541,7 +545,7 @@ public class MouseClick : MonoBehaviour
 
 
     //Rengi değiştirilecek childiren'ları bulma
-    void FindChildrens(GameObject parentObject)
+    public void FindChildrens(GameObject parentObject)
     {
         selectedItems = parentObject.GetComponentsInChildren<MeshRenderer>();
     }
@@ -586,12 +590,14 @@ public class MouseClick : MonoBehaviour
             }
             if (!originalColors.ContainsKey(renderer))
             {
-                originalColors[renderer] = renderer.material.color;
+                originalColors[renderer] = renderer.sharedMaterial.color;
             }
 
             renderer.SetPropertyBlock(highlightBlock);
         }
     }
+    private Color grayColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, 0.60f);
+    private MaterialPropertyBlock grayBlock;
 
     public void ChangeColorBack()
     {
@@ -599,44 +605,72 @@ public class MouseClick : MonoBehaviour
 
         foreach (Renderer renderer in selectedItems)
         {
-            // VisualQueryManager'ın kontrolü altındaysa işlem yapma
-            if (moveButtons.visualQuery && visualQueryManager != null && 
-                visualQueryManager.originalBlocks.ContainsKey(renderer))
+            if (moveButtons.visualQuery && visualQueryManager != null)
             {
-                var visualQueryBlock = visualQueryManager.originalBlocks[renderer];
-                renderer.SetPropertyBlock(visualQueryBlock);
+                if (visualQueryManager.changedBlocks.ContainsKey(renderer))
+                {
+                    var visualQueryBlock = visualQueryManager.changedBlocks[renderer];
+                    renderer.SetPropertyBlock(visualQueryBlock);
+                }
+                else
+                {
+                    grayBlock = new MaterialPropertyBlock();
+                    grayBlock.SetFloat("_UseOverrideColor", 1f);
+                    grayBlock.SetColor("_OverrideColor", grayColor);
+                    renderer.SetPropertyBlock(grayBlock);
+                }
             }
             else if (originalBlocks.TryGetValue(renderer, out var originalBlock))
             {
                 renderer.SetPropertyBlock(originalBlock);
             }
         }
-        
+
         selectedItems = null;
     }
 
-    //Objeye tıklandığında hiyerarşide sayfaların açılması
     public IEnumerator Expand()
     {
         searchBar.loadingPanel.gameObject.SetActive(true);
-        searchBar.text.text = "LOADING ...";
         bool isOn = false;
+
         for (int i = objects.Count - 1; i >= 0; i--)
         {
-            treeViewItem = treeView.GetTreeViewItem(objects[i]);
-            treeViewExpander = treeViewItem.GetComponentInChildren<TreeViewExpander>();
+            if (i >= objects.Count || i < 0)
+            yield break;
+            TreeViewItem item = null;
+
+            // TreeViewItem oluşana kadar bekle
+            yield return new WaitUntil(() =>
+            {
+                item = treeView.GetTreeViewItem(objects[i]);
+                return item != null;
+            });
+
+            TreeViewExpander expander = null;
+
+            // Expander oluşana kadar bekle (eğer property ya da field varsa)
+            yield return new WaitUntil(() =>
+            {
+                expander = item.GetComponentInChildren<TreeViewExpander>(); // örnek: field ya da property
+                return expander != null;
+            });
+
+            treeViewItem = item;
+            treeViewExpander = expander;
             isOn = treeViewExpander.IsOn;
-            if(!treeViewExpander.IsOn)
+
+            if (!treeViewExpander.IsOn)
             {
                 treeViewExpander.IsOn = true;
-                // Her bir öğe için bir kare bekle, işlemi zamana yay
-                yield return null;
+                yield return null; // UI güncellensin
             }
         }
         treeView.SelectedItem = currentObject;
-        if(isOn) treeView.canFocus = true;
+        if (isOn) treeView.canFocus = true;
         expanded = true;
     }
+
 
     //Objeye tıklandığında scroll'un odaklanması
     void ScrollFocus()

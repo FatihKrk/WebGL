@@ -127,24 +127,27 @@ public class MoveButtons : MonoBehaviour
         measureScrpt.lineRenderer.SetPosition(0, new Vector3(0,0,0));
         measureScrpt.lineRenderer.SetPosition(1, new Vector3(0,0,0));
         measureScrpt.lineRenderer.gameObject.layer = 0;
-        
-        if(section && sectionObject == mouseClick.currentObject)
+
+        if (section && sectionObject == mouseClick.currentObject)
         {
             clippingController.isScale = false;
             clippingController.isMove = false;
+            Shader.SetGlobalVector("_Bound", new Vector4(1000000, 1000000, 1000000, 1));
             clippingController.ChangeDisabled();
             section = false;
         }
         else
         {
             section = true;
+            clippingController.isMove = true;
+            clippingController.Sectioning();
         }
 
         sectionObject = mouseClick.currentObject;
         select = false;
         measure = false;
         avatar = false;
-        clippingController.Sectioning();
+        
     }
 
     public void MeasureBetween()

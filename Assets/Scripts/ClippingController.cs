@@ -31,6 +31,7 @@ public class ClippingController : MonoBehaviour
 
     void Start()
     {
+        Shader.SetGlobalVector("_Bound", new Vector4(1000000, 1000000, 1000000, 1));
         scaleObj = centerHandle.transform;
         parentObject = GameObject.FindGameObjectWithTag("ParentObject").transform;
         // Küp oluşturma
@@ -83,7 +84,6 @@ public class ClippingController : MonoBehaviour
         }
         if (!moveButtons.section)
         {
-            Shader.SetGlobalVector("_Bound", new Vector4(1000000, 1000000, 1000000, 1));
             scaleObj.gameObject.SetActive(false);
             moveObj.gameObject.SetActive(false);
             cube.SetActive(false); // Küpü gizle
