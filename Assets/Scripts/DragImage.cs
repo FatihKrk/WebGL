@@ -8,7 +8,7 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     private Canvas canvas;
     private bool isDragging = false;
 
-    public GameObject avatarPrefab; // Instantiate edilecek avatar prefab
+    public GameObject avatarPrefab, parentObject; // Instantiate edilecek avatar prefab
     public LayerMask groundLayer; // Ground için layer seçimi
 
     private Camera uiCamera; // Canvas için kullanılan kamera
@@ -17,6 +17,8 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     void Awake()
     {
+        parentObject = GameObject.FindGameObjectWithTag("ParentObject");
+
         GameObject cnvsObj = GameObject.Find("CanvasCamera");
         uiCamera = cnvsObj.GetComponent<Camera>();
 
@@ -50,15 +52,34 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         Ray ray = uiCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, groundLayer))
         {
-
             instantiatePosition = hitInfo.point; // Doğrudan raycast pozisyonu al
         }
         if (isDragging)
         {
-            // Kamerayı sabit bir pozisyona ayarlamak isterseniz burayı değiştirebilirsiniz
-            Camera.main.transform.position = new Vector3(1598f,130f,722f);
-            Camera.main.transform.rotation = Quaternion.Euler(45, 0, 0);
+            FocusCameraOnParent(120f, 45f, 45f);
         }
+    }
+
+    private void FocusCameraOnParent(float distance, float height, float angle)
+    {
+        if (parentObject == null) return;
+
+        Renderer[] renderers = parentObject.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0) return;
+
+        Bounds bounds = renderers[0].bounds;
+        foreach (var rend in renderers)
+            bounds.Encapsulate(rend.bounds);
+
+        Vector3 center = bounds.center;
+
+        // Kamera hedef noktasına göre offset hesapla
+        Vector3 direction = Quaternion.Euler(0f, 45f, 0f) * Vector3.forward;
+        Vector3 horizontalOffset = direction * distance;
+        Vector3 cameraPosition = center - horizontalOffset + Vector3.up * height;
+
+        Camera.main.transform.position = cameraPosition;
+        Camera.main.transform.LookAt(center);
     }
 
     public void OnPointerDown(PointerEventData eventData)

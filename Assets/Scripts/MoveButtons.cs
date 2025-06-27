@@ -109,19 +109,22 @@ public class MoveButtons : MonoBehaviour
         {
             clippingController.isScale = false;
             clippingController.isMove = false;
+            Shader.SetGlobalVector("_Bound", new Vector4(1000000, 1000000, 1000000, 1));
             clippingController.ChangeDisabled();
             section = false;
         }
         else
         {
             section = true;
+            clippingController.isMove = true;
+            clippingController.Sectioning();
         }
 
         sectionObject = mouseClick.currentObject;
         select = false;
         measure = false;
         avatar = false;
-        clippingController.Sectioning();
+        
     }
 
     public void MeasureBetween()
@@ -176,14 +179,14 @@ public class MoveButtons : MonoBehaviour
             {
                 visualQueryManager.groupPanel.SetActive(false);
                 visualQueryManager.DestroyGroupChildren();
-                visualQueryManager.ResetColors();
+                visualQueryManager.ResetColorsWithClipping();
             }
             else if (visualQueryManager.itemPanel.activeInHierarchy)
             {
                 visualQueryManager.itemPanel.SetActive(false);
                 visualQueryManager.DestroyGroupChildren();
                 visualQueryManager.DestroyItemChildren();
-                visualQueryManager.ResetColors();
+                visualQueryManager.ResetColorsWithClipping();
             }
             visualQuery = false;
         }

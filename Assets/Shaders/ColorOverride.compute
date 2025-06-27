@@ -1,0 +1,21 @@
+#pragma kernel CSMain
+
+RWStructuredBuffer<float4> colors;
+RWStructuredBuffer<int> visibility;
+RWStructuredBuffer<float4> resultColors;
+
+[numthreads(64, 1, 1)]
+void CSMain (uint id : SV_DispatchThreadID)
+{
+    float4 col = colors[id];
+    int vis = visibility[id];
+    
+    if (vis == 1)
+    {
+        resultColors[id] = float4(col.rgb, 1.0); // override aktif
+    }
+    else
+    {
+        resultColors[id] = float4(0.5, 0.5, 0.5, 1.0); // gri
+    }
+}
