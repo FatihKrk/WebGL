@@ -20,7 +20,7 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         GameObject cnvsObj = GameObject.Find("CanvasCamera");
         uiCamera = cnvsObj.GetComponent<Camera>();
 
-        GameObject mvmObj = GameObject.Find("MovementsPanel");
+        GameObject mvmObj = GameObject.Find("Bottompanel");
         moveButtons = mvmObj.GetComponent<MoveButtons>();
 
         rectTransform = GetComponent<RectTransform>();

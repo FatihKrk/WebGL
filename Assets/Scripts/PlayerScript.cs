@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerScript : MonoBehaviour
+public class PlayerScript : MonoBehaviour, ICanvasAware
 {
     Ray ray;
     RaycastHit hit;
@@ -22,7 +22,12 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject pivot;
     private bool notHit, timerStart, canOrbit, mouseButtonUp, shiftPressed;
     private float timer;
-
+    public void OnCanvasChanged(GameObject activeCanvas)
+    {
+        var found = activeCanvas.transform.Find("Bottompanel");
+        if (found != null)
+            moveButtons = found.GetComponent<MoveButtons>();
+    }
     private void Start()
     {
         mainCamera = Camera.main;

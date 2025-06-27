@@ -11,13 +11,13 @@ public class VisualQueryManager : MonoBehaviour
     [SerializeField] GameObject groupPrefab, groupPanelContent, itemPrefab, itemPanelContent;
     public GameObject mainPanel, groupPanel, itemPanel;
     public GameObject loadingPanel;
-    [SerializeField ]TMP_Text groupText;
+    [SerializeField] TMP_Text groupText;
     GameObject first_Parent;
     TMP_Text objectText;
     Slider slider, itemPanelSlider, groupPanelSlider;
     public Material newMaterial;
     private Dictionary<int, Color> colorDictionary = new Dictionary<int, Color>();
-    private string apiUrl = "https://m3muhendislik.com/api/sortMegByTag.php";
+    private string apiUrl = "https://m3muhendislik.com/api/sortByTag.php";
 
     [System.Serializable]
     public class ApiResponse
@@ -28,29 +28,13 @@ public class VisualQueryManager : MonoBehaviour
 
     void Start()
     {
-        first_Parent = GameObject.FindGameObjectWithTag("ParentObject");
-        CacheAllObjects();
         StartCoroutine(GetData());
+        first_Parent = GameObject.FindGameObjectWithTag("ParentObject");
         itemPanelSlider = itemPanel.GetComponentInChildren<Slider>();
         itemPanelSlider.onValueChanged.AddListener(ChangeItemColors);
         groupPanelSlider = groupPanel.GetComponentInChildren<Slider>();
         slider = mainPanel.GetComponentInChildren<Slider>();
         slider.onValueChanged.AddListener(OnSliderValueChanged);
-    }
-
-    void CacheAllObjects()
-    {
-        foreach (MeshRenderer renderer in first_Parent.GetComponentsInChildren<MeshRenderer>(true))
-        {
-            if (!cachedItems.ContainsKey(renderer.name))
-            {
-                cachedItems[renderer.name] = renderer.transform;
-            }
-            if (!originalColors.ContainsKey(renderer))
-            {
-                originalColors[renderer] = renderer.material.color;
-            }
-        }
     }
 
     public Color GetColor(int id)
@@ -87,14 +71,14 @@ public class VisualQueryManager : MonoBehaviour
 
     IEnumerator GetData()
     {
-        loadingPanel.SetActive(true);
+        //loadingPanel.SetActive(true);
         UnityWebRequest request = UnityWebRequest.Get(apiUrl);
-        yield return request.SendWebRequest();        
+        yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
         {
             string jsonResponse = request.downloadHandler.text;
-            
+
             // JSON verisini çözümle
             ApiResponse data = JsonUtility.FromJson<ApiResponse>(jsonResponse);
 
@@ -126,7 +110,7 @@ public class VisualQueryManager : MonoBehaviour
 
         // UI'ye toplam grup sayısını yaz
         groupText.text = groupedData.Count.ToString() + " groups";
-            
+
         int i = 0;
         foreach (var group in groupedData)
         {
@@ -170,26 +154,23 @@ public class VisualQueryManager : MonoBehaviour
         Slider[] sliders = groupPanelContent.GetComponentsInChildren<Slider>();
 
         int i = 0;
-        int counter = 0; // Eklenen sayaç
 
         // Dinamik olarak her type grubuna erişim
         foreach (var group in groupedData)
         {
-            string groupName = group.Key;
-            List<string> names = group.Value;
+            string groupName = group.Key;  // Grubun adı (örneğin, "EQUI")
+            List<string> names = group.Value;  // O gruptaki name'ler
 
             if (objectText.text == groupName)
             {
                 itemTexts[0].text = groupName;
                 itemTexts[1].text = names.Count.ToString() + " items";
-
                 foreach (var name in names)
                 {
                     if (Search(name) != null)
                     {
                         TMP_Text text = itemPrefab.GetComponentInChildren<TMP_Text>();
                         text.text = name;
-
                         if (sliders[i].value == 0)
                         {
                             itemPrefab.GetComponentInChildren<Slider>().value = 0;
@@ -198,17 +179,9 @@ public class VisualQueryManager : MonoBehaviour
                         {
                             itemPrefab.GetComponentInChildren<Slider>().value = 1;
                         }
-
                         Instantiate(itemPrefab, itemPanelContent.transform);
-
-                        counter++;
-                        if (counter % 100 == 0)
-                        {
-                            yield return null;
-                        }
                     }
                 }
-
                 Image[] images = itemPanel.GetComponentsInChildren<Image>();
                 images[images.Length - 1].color = GetColor(i);
                 groupPanel.SetActive(false);
@@ -217,11 +190,10 @@ public class VisualQueryManager : MonoBehaviour
                 break;
             }
             i++;
+            yield return null;
         }
-
         loadingPanel.SetActive(false);
     }
-
 
     public void InstantiateItems(GameObject textObj)
     {
@@ -238,7 +210,7 @@ public class VisualQueryManager : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-    
+
     public void DestroyGroupChildren()
     {
         // Parent'ın tüm çocuklarını döngüyle yok et
@@ -259,66 +231,75 @@ public class VisualQueryManager : MonoBehaviour
     IEnumerator ChangeColor()
     {
         int i = 0;
-        int batchSize = 0;
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         HashSet<Renderer> processedRenderers = new HashSet<Renderer>();
 
-        // İlk başta tüm renderer'ları cache'leyelim
-        MeshRenderer[] allFirstParentRenderers = first_Parent.GetComponentsInChildren<MeshRenderer>(true);
-
         foreach (var group in groupedData)
         {
-            string groupName = group.Key;
-            List<string> names = group.Value;
-            Color groupColor = GetColor(i);
-
-            foreach (var name in names)
+            try
             {
-                Transform item = GetOrCacheItem(name);
-                if (item != null)
-                {
-                    foreach (var renderer in item.GetComponentsInChildren<MeshRenderer>(true))
-                    {
-                        renderer.GetPropertyBlock(block);
-                        SetRendererColor(renderer, groupColor, block);
-                        processedRenderers.Add(renderer);
-                        batchSize++;
+                string groupName = group.Key;
+                List<string> names = group.Value;
+                Color groupColor = GetColor(i);
 
-                        if (batchSize >= 250)
+                foreach (var name in names)
+                {
+                    Transform item = GetOrCacheItem(name);
+                    if (item != null)
+                    {
+                        foreach (var renderer in item.GetComponentsInChildren<MeshRenderer>(true))
                         {
-                            batchSize = 0;
-                            yield return null;  // İşlem arası vererek yükü dağıtıyoruz
+                            renderer.GetPropertyBlock(block);
+
+                            if (!originalColors.ContainsKey(renderer))
+                            {
+                                originalColors[renderer] = renderer.material.color;
+                            }
+
+                            SetRendererColor(renderer, groupColor, block);
+                            processedRenderers.Add(renderer);
                         }
                     }
                 }
+                i++;
             }
-            i++;
-        }
-
-        // İlk parent'teki işlenmemiş renderer'ları griye çevir
-        foreach (var renderer in allFirstParentRenderers)
-        {
-            if (!processedRenderers.Contains(renderer))
+            catch (System.Exception ex)
             {
-                renderer.GetPropertyBlock(block);
-                SetRendererColor(renderer, grayColor, block);
+                Debug.LogError("Error processing group " + group.Key + ": " + ex.Message);
+                Debug.LogError(ex.StackTrace); // Daha fazla detay için
             }
 
-            batchSize++;
-            if (batchSize >= 250)
-            {
-                batchSize = 0;
-                yield return null;  // İşlem arası vererek yükü dağıtıyoruz
-            }
+            // Hata olmasa da her grup işleminden sonra yield return yazılabilir
+            yield return null;
         }
 
-        // UI slider değerlerini sıfırlama işlemi
-        foreach (Slider slider in groupPanel.GetComponentsInChildren<Slider>())
+        // Son işlemler ve diğer hatalar için ikinci try-catch bloğu
+        try
         {
-            slider.value = 1;
+            foreach (Transform child in first_Parent.transform)
+            {
+                foreach (var renderer in child.GetComponentsInChildren<MeshRenderer>(true))
+                {
+                    if (!processedRenderers.Contains(renderer) && !originalColors.ContainsKey(renderer))
+                    {
+                        renderer.GetPropertyBlock(block);
+                        originalColors[renderer] = renderer.material.color;
+                        SetRendererColor(renderer, grayColor, block);
+                    }
+                }
+            }
+
+            foreach (Slider slider in groupPanel.GetComponentsInChildren<Slider>())
+            {
+                slider.value = 1;
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("Error in final processing: " + ex.Message);
+            Debug.LogError(ex.StackTrace);
         }
 
-        // Yükleme panelini gizleme
         loadingPanel.SetActive(false);
     }
 
@@ -345,16 +326,26 @@ public class VisualQueryManager : MonoBehaviour
     public void ResetColors()
     {
         loadingPanel.SetActive(true);
+
         MaterialPropertyBlock block = new MaterialPropertyBlock();
+        HashSet<Renderer> processedRenderers = new HashSet<Renderer>();
 
-        foreach (var kvp in originalColors)
+        foreach (var entry in originalColors)
         {
-            Renderer renderer = kvp.Key;
-            Color originalColor = kvp.Value;
+            Renderer item = entry.Key;
+            Color originalColor = entry.Value;
 
-            renderer.GetPropertyBlock(block);
-            block.SetColor("_Color", originalColor);
-            renderer.SetPropertyBlock(block);
+            MeshRenderer[] renderers = item.GetComponentsInChildren<MeshRenderer>(true);
+            foreach (var renderer in renderers)
+            {
+                if (!processedRenderers.Contains(renderer))
+                {
+                    processedRenderers.Add(renderer);
+                }
+                renderer.GetPropertyBlock(block);
+                block.SetColor("_Color", originalColor);
+                renderer.SetPropertyBlock(block);
+            }
         }
 
         foreach (Slider slider in groupPanelContent.GetComponentsInChildren<Slider>())
@@ -362,22 +353,22 @@ public class VisualQueryManager : MonoBehaviour
             slider.value = 0;
         }
 
+        originalColors.Clear();
         loadingPanel.SetActive(false);
     }
 
-
     public void ChangeGroupsColor()
     {
-        if(groupPanelSlider.value == 0)
+        if (groupPanelSlider.value == 0)
         {
-            foreach(Slider slider in groupPanelContent.GetComponentsInChildren<Slider>())
+            foreach (Slider slider in groupPanelContent.GetComponentsInChildren<Slider>())
             {
                 slider.value = 0;
             }
         }
-        if(groupPanelSlider.value == 1)
+        if (groupPanelSlider.value == 1)
         {
-            foreach(Slider slider in groupPanelContent.GetComponentsInChildren<Slider>())
+            foreach (Slider slider in groupPanelContent.GetComponentsInChildren<Slider>())
             {
                 slider.value = 1;
             }
@@ -411,18 +402,18 @@ public class VisualQueryManager : MonoBehaviour
 
     private void ChangeItemColors(float value)
     {
-        if(itemPanelSlider.gameObject.activeInHierarchy)
+        if (itemPanelSlider.gameObject.activeInHierarchy)
         {
-            if(itemPanelSlider.value == 1)
+            if (itemPanelSlider.value == 1)
             {
-                foreach(Slider slider in itemPanelContent.GetComponentsInChildren<Slider>())
+                foreach (Slider slider in itemPanelContent.GetComponentsInChildren<Slider>())
                 {
                     slider.value = 1;
                 }
             }
-            if(itemPanelSlider.value == 0)
+            if (itemPanelSlider.value == 0)
             {
-                foreach(Slider slider in itemPanelContent.GetComponentsInChildren<Slider>())
+                foreach (Slider slider in itemPanelContent.GetComponentsInChildren<Slider>())
                 {
                     slider.value = 0;
                 }
@@ -433,21 +424,21 @@ public class VisualQueryManager : MonoBehaviour
     public void ControlItemSlider()
     {
         bool allOpen = true;
-        foreach(Slider slider in itemPanelContent.GetComponentsInChildren<Slider>())
+        foreach (Slider slider in itemPanelContent.GetComponentsInChildren<Slider>())
         {
-            if(slider.value == 0)
+            if (slider.value == 0)
             {
                 allOpen = false;
                 break;
             }
         }
-        
-        if(allOpen)
+
+        if (allOpen)
         {
             TMP_Text[] groupNames = groupPanel.GetComponentsInChildren<TMP_Text>(true);
             foreach (var groupName in groupNames)
             {
-                if(itemPanel.GetComponentInChildren<TMP_Text>().text == groupName.text)
+                if (itemPanel.GetComponentInChildren<TMP_Text>().text == groupName.text)
                 {
                     groupName.transform.parent.GetComponentInChildren<Slider>(true).value = 1;
                 }
@@ -459,12 +450,12 @@ public class VisualQueryManager : MonoBehaviour
             TMP_Text[] groupNames = groupPanel.GetComponentsInChildren<TMP_Text>();
             foreach (var groupName in groupNames)
             {
-                if(itemPanel.GetComponentInChildren<TMP_Text>().text == groupName.text)
+                if (itemPanel.GetComponentInChildren<TMP_Text>().text == groupName.text)
                 {
                     groupName.transform.parent.GetComponentInChildren<Slider>(true).value = 0;
                 }
             }
             itemPanelSlider.SetValueWithoutNotify(0);
-        } 
+        }
     }
 }

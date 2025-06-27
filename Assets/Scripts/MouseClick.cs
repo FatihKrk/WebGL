@@ -9,7 +9,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 
 
-public class MouseClick : MonoBehaviour
+public class MouseClick : MonoBehaviour, ICanvasAware
 {
     [SerializeField] GetAttFromSql getAttFromSql;
     private EventSystem eventSystem;
@@ -34,7 +34,18 @@ public class MouseClick : MonoBehaviour
     List<GameObject> objects = new List<GameObject>();
     public Vector3 pozisyon;
     MeshRenderer[] selectedItems;
-    
+
+    public void OnCanvasChanged(GameObject activeCanvas)
+    {
+        var bottom = activeCanvas.transform.Find("Bottompanel");
+        var attrPanel = activeCanvas.transform.Find("AttributesPanel");
+
+        if (bottom != null) moveButtons = bottom.GetComponent<MoveButtons>();
+        if (attrPanel != null) attributes_Panel = attrPanel.gameObject;
+
+        // panel ve colorChangePanel sabitse değiştirme
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -657,7 +668,7 @@ public class MouseClick : MonoBehaviour
     public IEnumerator Expand()
     {
         searchBar.loadingPanel.gameObject.SetActive(true);
-        searchBar.text.text = "LOADING ...";
+       // searchBar.text.text = "LOADING ...";
         bool isOn = false;
         for (int i = objects.Count - 1; i >= 0; i--)
         {

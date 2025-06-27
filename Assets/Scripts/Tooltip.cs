@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Tooltip : MonoBehaviour
+public class Tooltip : MonoBehaviour, ICanvasAware
 {
     public GameObject tooltipObject; // Tooltip UI objesi
     public TMP_Text tooltipText; // Tooltip'te gösterilecek metin
@@ -11,6 +11,10 @@ public class Tooltip : MonoBehaviour
     public Vector2 tooltipOffset = new Vector2(20, -20); // Tooltip'in mouse'a göre ofseti
     private GraphicRaycaster raycaster;
 
+    public void OnCanvasChanged(GameObject activeCanvas)
+    {
+        canvas = activeCanvas.GetComponent<Canvas>();
+    }
     private void Start()
     {
         // Canvas üzerindeki GraphicRaycaster bileşenini al

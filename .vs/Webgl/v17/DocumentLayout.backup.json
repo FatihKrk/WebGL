@@ -1,0 +1,213 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|c:\\users\\iremb\\desktop\\webg_\\webgl\\assets\\scripts\\toggleswitchcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\toggleswitchcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\scripts\\movebuttons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\movebuttons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\scripts\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\scripts\\switchbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\switchbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\killfullscreenblockers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\killfullscreenblockers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\scripts\\applycolor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\applycolor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\scripts\\tooltip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\tooltip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\scripts\\clippingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\clippingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\scripts\\measure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\measure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\scripts\\mouseclick.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mouseclick.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\scripts\\playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\scripts\\icanvasaware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\icanvasaware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ToggleSwitchController.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\ToggleSwitchController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ToggleSwitchController.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\ToggleSwitchController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ToggleSwitchController.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAADwv2cAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T10:46:01.088Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MoveButtons.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\MoveButtons.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MoveButtons.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\MoveButtons.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MoveButtons.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAADgv0UAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T07:19:54.429Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "KillFullScreenBlockers.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\KillFullScreenBlockers.cs",
+              "RelativeDocumentMoniker": "Assets\\KillFullScreenBlockers.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\KillFullScreenBlockers.cs",
+              "RelativeToolTip": "Assets\\KillFullScreenBlockers.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:18:20.723Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SwitchButton.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\SwitchButton.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SwitchButton.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\SwitchButton.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SwitchButton.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAowBQAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:04:37.82Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ApplyColor.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\ApplyColor.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ApplyColor.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\ApplyColor.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ApplyColor.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAADwv0cAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-03T13:48:25.992Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Tooltip.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\Tooltip.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Tooltip.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\Tooltip.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Tooltip.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-03T11:46:35.027Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Measure.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\Measure.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Measure.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\Measure.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Measure.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-03T11:45:41.363Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "PlayerScript.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\PlayerScript.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerScript.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\PlayerScript.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerScript.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-03T11:43:17.945Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ICanvasAware.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\ICanvasAware.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ICanvasAware.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\ICanvasAware.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ICanvasAware.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-03T11:33:10.416Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UIManager.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\UIManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\UIManager.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\UIManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\UIManager.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwCEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-03T11:32:06.841Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ClippingController.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\ClippingController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ClippingController.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\ClippingController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ClippingController.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAwwCYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T09:11:45.372Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MouseClick.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\MouseClick.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MouseClick.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\MouseClick.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MouseClick.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAxwC4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T08:36:46.274Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
