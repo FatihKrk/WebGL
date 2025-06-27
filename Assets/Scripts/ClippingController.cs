@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ClippingController : MonoBehaviour, ICanvasAware
+public class ClippingController : MonoBehaviour
 {
     [SerializeField] MoveButtons moveButtons;
     [SerializeField] MouseClick mouseClick;
@@ -28,15 +28,6 @@ public class ClippingController : MonoBehaviour, ICanvasAware
     private Vector3 lastBound; // Son güncellenen bound
     public bool isScale, isMove = true;
     MeshRenderer[] renderers;
-
-    public void OnCanvasChanged(GameObject activeCanvas)
-    {
-        var bottom = activeCanvas.transform.Find("Bottompanel");
-        if (bottom != null) moveButtons = bottom.GetComponent<MoveButtons>();
-
-        var cameraObj = GameObject.Find("Main Camera");
-        if (cameraObj != null) cam = cameraObj.GetComponent<Camera>();
-    }
 
     void Start()
     {

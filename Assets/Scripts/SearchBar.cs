@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class SearchBar : MonoBehaviour
 {
     [SerializeField] MouseClick mouseClick;
-    [SerializeField] TMP_InputField inputField;
+    [SerializeField] InputField inputField;
     [SerializeField] TreeViewDemo treeViewDemo;
     Transform first_Parent;
     public Transform loadingPanel;
@@ -17,12 +17,12 @@ public class SearchBar : MonoBehaviour
     bool shouldSearch = false;
     int objQueue;
     string searched_Text, lastText;
-
+    public Text text;
 
     void Start()
     {
         first_Parent = GameObject.FindGameObjectWithTag("ParentObject").transform;
-
+        text = loadingPanel.GetComponentInChildren<Text>();
     }
     void Update()
     {
@@ -40,7 +40,7 @@ public class SearchBar : MonoBehaviour
     }
     public void Search()
     {
-        if (searched_Text != lastText)
+        if(searched_Text != lastText)
         {
             lastText = searched_Text;
             searchedObjects.Clear();
@@ -63,7 +63,7 @@ public class SearchBar : MonoBehaviour
                     stack.Push(current.GetChild(i));
                 }
             }
-            if (searchedObjects.Count != 0)
+            if(searchedObjects.Count != 0)
             {
                 mouseClick.currentObject = searchedObjects[objQueue].gameObject;
                 StartCoroutine(mouseClick.Search());
@@ -73,7 +73,7 @@ public class SearchBar : MonoBehaviour
         else
         {
             objQueue++;
-            if (searchedObjects.Count > objQueue)
+            if(searchedObjects.Count > objQueue)
             {
                 mouseClick.currentObject = searchedObjects[objQueue].gameObject;
                 StartCoroutine(mouseClick.Search());
@@ -85,7 +85,7 @@ public class SearchBar : MonoBehaviour
     IEnumerator Notification()
     {
         loadingPanel.gameObject.SetActive(true);
-
+        text.text = "NOTHING FOUND";
 
         yield return new WaitForSeconds(2f);
 

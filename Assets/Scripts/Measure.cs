@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Measure : MonoBehaviour, ICanvasAware
+public class Measure : MonoBehaviour
 {
     Ray ray;
     RaycastHit hit;
@@ -14,11 +14,6 @@ public class Measure : MonoBehaviour, ICanvasAware
     public bool isOverUI, firstClick, secondClick;
     private float RotationSpeed;
     private GameObject highlightSphere;
-    public void OnCanvasChanged(GameObject activeCanvas)
-    {
-        var bottom = activeCanvas.transform.Find("Bottompanel");
-        if (bottom != null) moveButtons = bottom.GetComponent<MoveButtons>();
-    }
 
     void Start()
     {
