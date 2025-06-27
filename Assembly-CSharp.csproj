@@ -98,6 +98,7 @@
     <Compile Include="Assets\Scripts\SearchBar.cs" />
     <Compile Include="Assets\Scripts\MouseClick.cs" />
     <Compile Include="Assets\Scripts\FirstPersonController.cs" />
+    <Compile Include="Assets\Scripts\BubbleView.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\SectionPanelController.cs" />
     <Compile Include="Assets\Scripts\ApplyColor.cs" />

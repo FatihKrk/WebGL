@@ -3,6 +3,7 @@ guid: f1fd1abf5bd091b4d8acf82bd8e588f2
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
+<<<<<<< Updated upstream
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -59,6 +60,9 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Color 78Translucent(0.00)
     second: {fileID: 2100000, guid: 02307cfbe87bd294c9314b07b703b3d7, type: 2}
+=======
+  externalObjects: {}
+>>>>>>> Stashed changes
   materials:
     materialImportMode: 2
     materialName: 0
@@ -85,11 +89,16 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
+<<<<<<< Updated upstream
     isReadable: 1
+=======
+    isReadable: 0
+>>>>>>> Stashed changes
   meshes:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
+<<<<<<< Updated upstream
     addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 0
@@ -98,6 +107,16 @@ ModelImporter:
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+=======
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+>>>>>>> Stashed changes
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
@@ -106,7 +125,11 @@ ModelImporter:
     keepQuads: 0
     weldVertices: 1
     bakeAxisConversion: 0
+<<<<<<< Updated upstream
     preserveHierarchy: 1
+=======
+    preserveHierarchy: 0
+>>>>>>> Stashed changes
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
@@ -131,7 +154,11 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
+<<<<<<< Updated upstream
   importAnimation: 0
+=======
+  importAnimation: 1
+>>>>>>> Stashed changes
   humanDescription:
     serializedVersion: 3
     human: []
@@ -146,11 +173,19 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
+<<<<<<< Updated upstream
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
+=======
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+>>>>>>> Stashed changes
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1

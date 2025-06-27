@@ -6,3 +6,26 @@ Assets/Prefabs/Meg_M3NetReviewPakage.fbx.meta
 Assets/Prefabs/Geg-Area22_SDx.fbx
 Assets/Prefabs/Geg-Area22_SDx.fbx.meta
 Assets/Prefabs/Meg_M3NetReview.fbx
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+Temp/
+Library/
+Obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+MemoryCaptures/
+Assembly-CSharp-Editor.csproj Assembly-CSharp-firstpass.csproj Assembly-CSharp.Player.csproj Assembly-CSharp.csproj Battlehub.RTEditor.Demo.Player.csproj Battlehub.RTEditor.Demo.csproj Battlehub.RTEditor.Editor.csproj Battlehub.RTEditor.Player.csproj Battlehub.RTEditor.csproj HLOD.csproj HLODEditor.csproj PPv2URPConverters.csproj Pcx.Editor.csproj Pcx.Player.csproj Pcx.csproj Unity.Burst.CodeGen.csproj Unity.Burst.Editor.csproj Unity.Burst.Player.csproj Unity.Burst.csproj Unity.CollabProxy.Editor.csproj Unity.Collections.CodeGen.csproj Unity.Collections.Editor.csproj Unity.Collections.Player.csproj Unity.Collections.csproj Unity.EditorCoroutines.Editor.csproj Unity.Mathematics.Editor.csproj Unity.Mathematics.Player.csproj Unity.Mathematics.csproj Unity.MemoryProfiler.Editor.MemoryProfilerModule.csproj Unity.MemoryProfiler.Editor.csproj Unity.MemoryProfiler.Player.csproj Unity.MemoryProfiler.csproj Unity.Multiplayer.Center.Common.Player.csproj Unity.Multiplayer.Center.Common.csproj Unity.Multiplayer.Center.Editor.csproj Unity.Performance.Profile-Analyzer.Editor.csproj Unity.PerformanceTesting.Editor.csproj Unity.PerformanceTesting.Player.csproj Unity.PerformanceTesting.csproj Unity.PlasticSCM.Editor.csproj Unity.RenderPipeline.Universal.ShaderLibrary.Player.csproj Unity.RenderPipeline.Universal.ShaderLibrary.csproj Unity.RenderPipelines.Core.Editor.Shared.csproj Unity.RenderPipelines.Core.Editor.csproj Unity.RenderPipelines.Core.Runtime.Player.csproj Unity.RenderPipelines.Core.Runtime.Shared.Player.csproj Unity.RenderPipelines.Core.Runtime.Shared.csproj Unity.RenderPipelines.Core.Runtime.csproj Unity.RenderPipelines.Core.ShaderLibrary.Player.csproj Unity.RenderPipelines.Core.ShaderLibrary.csproj Unity.RenderPipelines.GPUDriven.Runtime.Player.csproj Unity.RenderPipelines.GPUDriven.Runtime.csproj Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player.csproj Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj Unity.RenderPipelines.Universal.2D.Runtime.Player.csproj Unity.RenderPipelines.Universal.2D.Runtime.csproj Unity.RenderPipelines.Universal.Config.Runtime.Player.csproj Unity.RenderPipelines.Universal.Config.Runtime.csproj Unity.RenderPipelines.Universal.Editor.csproj Unity.RenderPipelines.Universal.Runtime.Player.csproj Unity.RenderPipelines.Universal.Runtime.csproj Unity.RenderPipelines.Universal.Shaders.Player.csproj Unity.RenderPipelines.Universal.Shaders.csproj Unity.Rendering.LightTransport.Editor.csproj Unity.Rendering.LightTransport.Runtime.Player.csproj Unity.Rendering.LightTransport.Runtime.csproj Unity.Rider.Editor.csproj Unity.Searcher.Editor.csproj Unity.Settings.Editor.csproj Unity.ShaderGraph.Editor.csproj Unity.ShaderGraph.Utilities.csproj Unity.Sysroot.Linux_x86_64.csproj Unity.SysrootPackage.Editor.csproj Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.csproj Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.csproj Unity.TestTools.CodeCoverage.Editor.csproj Unity.TextMeshPro.Editor.csproj Unity.TextMeshPro.Player.csproj Unity.TextMeshPro.csproj Unity.Timeline.Editor.csproj Unity.Timeline.Player.csproj Unity.Timeline.csproj Unity.Toolchain.Win-x86_64-Linux-x86_64.csproj Unity.VisualScripting.Core.Editor.csproj Unity.VisualScripting.Core.Player.csproj Unity.VisualScripting.Core.csproj Unity.VisualScripting.Flow.Editor.csproj Unity.VisualScripting.Flow.Player.csproj Unity.VisualScripting.Flow.csproj Unity.VisualScripting.SettingsProvider.Editor.csproj Unity.VisualScripting.Shared.Editor.csproj Unity.VisualScripting.State.Editor.csproj Unity.VisualScripting.State.Player.csproj Unity.VisualScripting.State.csproj Unity.VisualStudio.Editor.csproj UnityEditor.TestRunner.csproj UnityEditor.UI.csproj UnityEngine.TestRunner.Player.csproj UnityEngine.TestRunner.csproj UnityEngine.UI.Player.csproj UnityEngine.UI.csproj UnityMeshSimplifier.csproj
+*.unityproj
+Webgl.sln
+*.user
+*.pidb
+*.apk
+.vscode/
+.idea/
+=======
+/Temp
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
