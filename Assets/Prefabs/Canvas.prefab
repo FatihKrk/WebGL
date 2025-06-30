@@ -2052,6 +2052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avatarPrefab: {fileID: 919132149155446097, guid: 2f51fb452f66ed64597e883559cb6a9c, type: 3}
+  parentObject: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -12687,6 +12688,10 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5815171745505426095, guid: 232f3bd103aeecb43a5586d20feddc9f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000015258789
+      objectReference: {fileID: 0}
     - target: {fileID: 6389960442750132152, guid: 232f3bd103aeecb43a5586d20feddc9f, type: 3}
       propertyPath: m_SortingLayer
       value: 0
@@ -12753,7 +12758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8436737014919344753, guid: 232f3bd103aeecb43a5586d20feddc9f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.97625005
+      value: 0.9752084
       objectReference: {fileID: 0}
     - target: {fileID: 8436737014919344753, guid: 232f3bd103aeecb43a5586d20feddc9f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -12765,7 +12770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8436737014919344753, guid: 232f3bd103aeecb43a5586d20feddc9f, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.82113713
+      value: 0.8675664
       objectReference: {fileID: 0}
     - target: {fileID: 8436737014919344753, guid: 232f3bd103aeecb43a5586d20feddc9f, type: 3}
       propertyPath: m_SizeDelta.x
