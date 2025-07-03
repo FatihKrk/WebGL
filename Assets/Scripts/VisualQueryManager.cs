@@ -8,7 +8,7 @@ using System.Linq;
 
 public class VisualQueryManager : MonoBehaviour
 {
-    [SerializeField] MoveButtons moveButtons;
+    MoveButtons moveButtons1, moveButtons2;
     [SerializeField] GameObject groupPrefab, groupPanelContent, itemPrefab, itemPanelContent;
     public GameObject mainPanel, groupPanel, itemPanel;
     public GameObject loadingPanel;
@@ -29,20 +29,33 @@ public class VisualQueryManager : MonoBehaviour
 
     private Dictionary<string, List<Transform>> _nameCache;
 
-    void Awake()
-    {
-        first_Parent = GameObject.FindGameObjectWithTag("ParentObject");
-        BuildNameCache();
-    }
-
     void Start()
     {
+        first_Parent = GameObject.FindGameObjectWithTag("ParentObject");
         StartCoroutine(GetData());
+        moveButtons1 = FindComponentEvenIfDisabled<MoveButtons>("MovementsPanel");
+        moveButtons2 = FindComponentEvenIfDisabled<MoveButtons>("BottomPanel");
         itemPanelSlider = itemPanel.GetComponentInChildren<Slider>(true);
         itemPanelSlider.onValueChanged.AddListener(ChangeItemColors);
         groupPanelSlider = groupPanel.GetComponentInChildren<Slider>(true);
         slider = mainPanel.GetComponentInChildren<Slider>(true);
         slider.onValueChanged.AddListener(OnSliderValueChanged);
+    }
+
+    private static T FindComponentEvenIfDisabled<T>(string parentName) where T : Component
+    {
+        T[] all = Resources.FindObjectsOfTypeAll<T>();
+
+        foreach (T component in all)
+        {
+            if (component.gameObject.name == parentName || component.transform.root.name == parentName || component.transform.parent?.name == parentName)
+            {
+                return component;
+            }
+        }
+
+        Debug.LogWarning($"{typeof(T)} component'i {parentName} altında bulunamadı.");
+        return null;
     }
 
     public Color GetColor(int id)
@@ -69,7 +82,11 @@ public class VisualQueryManager : MonoBehaviour
     public void sortByTags()
     {
         loadingPanel.SetActive(true);
-        moveButtons.visualQuery = true;
+
+        if(moveButtons1.gameObject.activeSelf)
+                    moveButtons1.visualQuery = true;
+                else
+                    moveButtons2.visualQuery = true;
         StartCoroutine(InstantiateGroups());
     }
 
@@ -81,12 +98,12 @@ public class VisualQueryManager : MonoBehaviour
     {
         loadingPanel.SetActive(true);
         UnityWebRequest request = UnityWebRequest.Get(apiUrl);
-        yield return request.SendWebRequest();        
+        yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
         {
             string jsonResponse = request.downloadHandler.text;
-            
+
             // JSON verisini çözümle
             ApiResponse data = JsonUtility.FromJson<ApiResponse>(jsonResponse);
 
@@ -110,6 +127,7 @@ public class VisualQueryManager : MonoBehaviour
             Debug.LogError("Hata: " + request.error);
         }
         BuildTransformGroupCache();
+        loadingPanel.SetActive(false);
     }
 
     IEnumerator InstantiateGroups()

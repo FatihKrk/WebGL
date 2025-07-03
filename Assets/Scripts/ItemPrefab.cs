@@ -17,11 +17,15 @@ public class ItemPrefab : MonoBehaviour
     private Color grayColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, 0.60f);
     private MaterialPropertyBlock grayBlock;
 
-    void Start()
+    void Awake()
     {
-        visualQueryManager = GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<VisualQueryManager>();
+        visualQueryManager = GameObject.Find("Canvas").GetComponentInChildren<VisualQueryManager>();
         mouseClick = GameObject.Find("MainCamera").GetComponentInChildren<MouseClick>();
         first_Parent = GameObject.FindGameObjectWithTag("ParentObject");
+    }
+
+    void Start()
+    {
         itemPanel = GameObject.Find("ByItemNamePanel");
         slider = gameObject.GetComponentInChildren<Slider>(true);
         slider.onValueChanged.AddListener(OnSliderValueChanged);

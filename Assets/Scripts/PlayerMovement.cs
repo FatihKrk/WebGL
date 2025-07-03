@@ -1,10 +1,11 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    MoveButtons moveButtons;
+    MoveButtons moveButtons1, moveButtons2;
     [SerializeField] Animator animator;
     [SerializeField] Transform cameraParent;
     Camera playerCamera;
@@ -31,17 +32,31 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         playerCamera = Camera.main;
-
-        GameObject obj = GameObject.Find("MovementsPanel");
-        moveButtons = obj.GetComponent<MoveButtons>();
-
+        moveButtons1 = FindComponentEvenIfDisabled<MoveButtons>("MovementsPanel");
+        moveButtons2 = FindComponentEvenIfDisabled<MoveButtons>("BottomPanel");
         characterController = GetComponent<CharacterController>();
         eventSystem = EventSystem.current; // EventSystem referansını al
     }
 
+    private static T FindComponentEvenIfDisabled<T>(string parentName) where T : Component
+    {
+        T[] all = Resources.FindObjectsOfTypeAll<T>();
+
+        foreach (T component in all)
+        {
+            if (component.gameObject.name == parentName || component.transform.root.name == parentName || component.transform.parent?.name == parentName)
+            {
+                return component;
+            }
+        }
+
+        Debug.LogWarning($"{typeof(T)} component'i {parentName} altında bulunamadı.");
+        return null;
+    }
+
     void Update()
     {
-        if (moveButtons.avatar && Cursor.lockState == CursorLockMode.Locked)
+        if ((moveButtons1.avatar || moveButtons2.avatar) && Cursor.lockState == CursorLockMode.Locked)
         {
             OnApplicationFocus(false);
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -61,11 +76,15 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                
                 OnApplicationFocus(true);
                 playerCamera.transform.SetParent(null);
-                moveButtons.Avatar();
+                if(moveButtons1.gameObject.activeSelf)
+                    moveButtons1.Avatar();
+                else
+                    moveButtons2.Avatar();
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 Destroy(gameObject);
             }
 

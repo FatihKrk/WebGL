@@ -17,7 +17,7 @@ public class PrefabManager : MonoBehaviour
 
     void Start()
     {
-        visualQueryManager = GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<VisualQueryManager>(true);
+        visualQueryManager = GameObject.Find("Canvas").GetComponentInChildren<VisualQueryManager>(true);
         objectText = gameObject.GetComponentInChildren<TMP_Text>(true);
         first_Parent = GameObject.FindGameObjectWithTag("ParentObject");
         slider = gameObject.GetComponentInChildren<Slider>(true);

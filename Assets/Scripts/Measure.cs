@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -10,13 +11,15 @@ public class Measure : MonoBehaviour
     public LineRenderer lineRenderer;
     private Vector3 firstPosition, lastPosition;
     public TMP_Text text;
-    [SerializeField] MoveButtons moveButtons;
+    MoveButtons moveButtons1, moveButtons2;
     public bool isOverUI, firstClick, secondClick;
     private float RotationSpeed;
     private GameObject highlightSphere;
 
     void Start()
     {
+        moveButtons1 = FindComponentEvenIfDisabled<MoveButtons>("MovementsPanel");
+        moveButtons2 = FindComponentEvenIfDisabled<MoveButtons>("BottomPanel");
         // Highlight için bir sphere oluştur
         highlightSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         highlightSphere.transform.localScale = Vector3.one * 0.1f; // Küçük bir boyut
@@ -25,9 +28,25 @@ public class Measure : MonoBehaviour
         highlightSphere.SetActive(false); // Başlangıçta gizli
     }
 
+    private static T FindComponentEvenIfDisabled<T>(string parentName) where T : Component
+    {
+        T[] all = Resources.FindObjectsOfTypeAll<T>();
+
+        foreach (T component in all)
+        {
+            if (component.gameObject.name == parentName || component.transform.root.name == parentName || component.transform.parent?.name == parentName)
+            {
+                return component;
+            }
+        }
+
+        Debug.LogWarning($"{typeof(T)} component'i {parentName} altında bulunamadı.");
+        return null;
+    }
+
     void Update()
     {
-        if (moveButtons.measure)
+        if (moveButtons1.measure || moveButtons2.measure)
         { 
             isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
 

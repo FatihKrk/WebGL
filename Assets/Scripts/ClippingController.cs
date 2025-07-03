@@ -1,10 +1,11 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ClippingController : MonoBehaviour
 {
-    [SerializeField] MoveButtons moveButtons;
+    MoveButtons moveButtons1, moveButtons2;
     [SerializeField] MouseClick mouseClick;
     [SerializeField] Camera cam;
     [SerializeField] Material cubeMaterial;
@@ -32,6 +33,10 @@ public class ClippingController : MonoBehaviour
     void Start()
     {
         Shader.SetGlobalVector("_Bound", new Vector4(1000000, 1000000, 1000000, 1));
+
+        moveButtons1 = FindComponentEvenIfDisabled<MoveButtons>("MovementsPanel");
+        moveButtons2 = FindComponentEvenIfDisabled<MoveButtons>("BottomPanel");
+
         scaleObj = centerHandle.transform;
         parentObject = GameObject.FindGameObjectWithTag("ParentObject").transform;
         // Küp oluşturma
@@ -59,6 +64,22 @@ public class ClippingController : MonoBehaviour
         }
     }
 
+    private static T FindComponentEvenIfDisabled<T>(string parentName) where T : Component
+    {
+        T[] all = Resources.FindObjectsOfTypeAll<T>();
+
+        foreach (T component in all)
+        {
+            if (component.gameObject.name == parentName || component.transform.root.name == parentName || component.transform.parent?.name == parentName)
+            {
+                return component;
+            }
+        }
+
+        Debug.LogWarning($"{typeof(T)} component'i {parentName} altında bulunamadı.");
+        return null;
+    }
+
     void PerformHeavyOperations()
     {
 
@@ -82,7 +103,7 @@ public class ClippingController : MonoBehaviour
             float distanceFromTarget = Vector3.Distance(player.position, moveObj.position);
             moveObj.localScale = new Vector3(distanceFromTarget / 40, distanceFromTarget / 40, distanceFromTarget / 40);
         }
-        if (!moveButtons.section)
+        if (!moveButtons1.section || !moveButtons2.section)
         {
             scaleObj.gameObject.SetActive(false);
             moveObj.gameObject.SetActive(false);

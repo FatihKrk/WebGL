@@ -17,29 +17,31 @@ public class MouseClick : MonoBehaviour
     [SerializeField] SearchBar searchBar;
     TreeViewItem treeViewItem;
     TreeViewExpander treeViewExpander;
-    [SerializeField] MoveButtons moveButtons;
+    MoveButtons moveButtons1, moveButtons2;
     //[SerializeField] Firebase firebase;
     [SerializeField] Hide_n_UnHide hide_N_UnHide;
     [SerializeField] Image hide_Image, hide_Unselected_Image;
     [SerializeField] Camera canvasCam;
-    [SerializeField] TMP_Text attributeText, nameText; 
+    [SerializeField] TMP_Text attributeText; 
     Ray ray, rayC;
     RaycastHit hit, hitC;
     private float timer = 0.2f , sendBtnTimer;
     private bool doubleClick, doubleClickable, canMove, single, multiple, singleObject, canStartTimer, expanded;
-    public bool isOverUI, multiSelect, hideActive, moveUntilArrive;
+    public bool isOverUI, multiSelect, hideActive, moveUntilArrive, uiSwitched;
     public GameObject currentObject, panel, colorChangePanel, attributes_Panel, parentObject, clickedObject;
     public List<GameObject> clickedItems = new List<GameObject>();
     List<GameObject> objects = new List<GameObject>();
     public Vector3 pozisyon;
     MeshRenderer[] selectedItems;
-    [SerializeField] private VisualQueryManager visualQueryManager;
+    VisualQueryManager visualQueryManager;
     
     // Start is called before the first frame update
     void Start()
     {
         parentObject = GameObject.FindGameObjectWithTag("ParentObject");
-
+        moveButtons1 = FindComponentEvenIfDisabled<MoveButtons>("MovementsPanel");
+        moveButtons2 = FindComponentEvenIfDisabled<MoveButtons>("BottomPanel");
+        visualQueryManager = GameObject.Find("Canvas").GetComponentInChildren<VisualQueryManager>(true);
         MeshRenderer[] allChilds = parentObject.GetComponentsInChildren<MeshRenderer>(true);
         foreach(MeshRenderer mesh in allChilds)
         {
@@ -51,10 +53,26 @@ public class MouseClick : MonoBehaviour
         GC.Collect();
     }
 
+    private static T FindComponentEvenIfDisabled<T>(string parentName) where T : Component
+    {
+        T[] all = Resources.FindObjectsOfTypeAll<T>();
+
+        foreach (T component in all)
+        {
+            if (component.gameObject.name == parentName || component.transform.root.name == parentName || component.transform.parent?.name == parentName)
+            {
+                return component;
+            }
+        }
+
+        Debug.LogWarning($"{typeof(T)} component'i {parentName} altında bulunamadı.");
+        return null;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(moveUntilArrive)
+        if (moveUntilArrive)
         {
             Move(3f);
         }
@@ -136,17 +154,6 @@ public class MouseClick : MonoBehaviour
             }
         }
 
-        /*if(canStartTimer)
-        {
-            sendBtnTimer -= Time.deltaTime;
-            if(sendBtnTimer <= 0)
-            {
-                nameText.text = "";
-                nameText.gameObject.SetActive(false);
-                canStartTimer = false;
-            }
-        }*/
-
         if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
             MoveInHierarchy();
@@ -163,7 +170,6 @@ public class MouseClick : MonoBehaviour
             FindPosition();
             ChangeColor();
             ScrollFocus();
-            searchBar.loadingPanel.gameObject.SetActive(false);
             treeView.canFocus = false;
             if(attributes_Panel.activeSelf)
             {
@@ -187,7 +193,7 @@ public class MouseClick : MonoBehaviour
             
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("RVMObjects") && Input.GetMouseButtonDown(0) && !isOverUI && moveButtons.select)
+                if (hit.collider.CompareTag("RVMObjects") && Input.GetMouseButtonDown(0) && !isOverUI && (moveButtons1.select || moveButtons2.select))
                 {
                     clickedObject = hit.collider.gameObject;
                     MultiObjects();
@@ -198,23 +204,10 @@ public class MouseClick : MonoBehaviour
                     clickedObject = hit.collider.gameObject;
                     MultiObjects();
                 }    
-
-                /*if(hit.collider.CompareTag("RVMObjects") && Input.GetKeyDown(KeyCode.LeftShift) && !isOverUI)
-                {
-                    objects.Clear();
-                    FindParents(hit.transform.gameObject);
-                    ShowName();
-                }*/
-
-                /*if(hit.collider.tag == null || Input.GetKeyUp(KeyCode.LeftShift))
-                {
-                    nameText.text = "";
-                    nameText.gameObject.SetActive(false);
-                }*/
             }
             else
             {
-                if(!isOverUI && Input.GetMouseButtonDown(0) && moveButtons.select && !moveButtons.section && currentObject != null)
+                if(!isOverUI && Input.GetMouseButtonDown(0) && (moveButtons1.select || moveButtons2.select) && (!moveButtons1.section || !moveButtons2.section) && currentObject != null)
                 {
                     ChangeColorBack();
                     selectedItems = parentObject.GetComponentsInChildren<MeshRenderer>();
@@ -413,7 +406,6 @@ public class MouseClick : MonoBehaviour
 
     private IEnumerator HandleMultiObjectFlow(GameObject obj)
     {
-        searchBar.loadingPanel.gameObject.SetActive(true);
         yield return StartCoroutine(FindParents(obj));
 
         currentObject = objects[1];
@@ -575,7 +567,7 @@ public class MouseClick : MonoBehaviour
         foreach (Renderer renderer in selectedItems)
         {
             // VisualQueryManager'ın kontrolü altındaysa işlem yapma
-            if (moveButtons.visualQuery && visualQueryManager != null && 
+            if ((moveButtons1.visualQuery || moveButtons2.visualQuery) && visualQueryManager != null && 
                 visualQueryManager.originalBlocks.ContainsKey(renderer))
             {
                 renderer.SetPropertyBlock(highlightBlock);
@@ -605,7 +597,7 @@ public class MouseClick : MonoBehaviour
 
         foreach (Renderer renderer in selectedItems)
         {
-            if (moveButtons.visualQuery && visualQueryManager != null)
+            if ((moveButtons1.visualQuery || moveButtons2.visualQuery) && visualQueryManager != null)
             {
                 if (visualQueryManager.changedBlocks.ContainsKey(renderer))
                 {
@@ -631,7 +623,6 @@ public class MouseClick : MonoBehaviour
 
     public IEnumerator Expand()
     {
-        searchBar.loadingPanel.gameObject.SetActive(true);
         bool isOn = false;
 
         for (int i = objects.Count - 1; i >= 0; i--)
@@ -683,33 +674,6 @@ public class MouseClick : MonoBehaviour
         treeView.scrollRect.verticalNormalizedPosition = c;
     }
 
-    //Shift'e basıldığında objenin isminin gözükmesi
-    /*void ShowName()
-    {
-        nameText.transform.localScale = new Vector3(1,1,1);
-        Vector3 mousePosition = Input.mousePosition;
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane + 1f));
-
-        nameText.gameObject.SetActive(true);
-        nameText.transform.position = worldPosition;
-
-        string objectName = clickedObject.name;
-        nameText.text = objectName;
-    }*/
-
-    /*public void SendMasterTag()
-    {
-        nameText.transform.localScale = new Vector3(2f,1.5f,1);
-        nameText.transform.localPosition = new Vector3(0,0,0);
-        nameText.gameObject.SetActive(true);
-        nameText.text = "Master tag has been send";
-        
-        firebase.SendMasterTag(value);
-        sendBtn.SetActive(false);
-
-        sendBtnTimer = 2f;
-        canStartTimer = true;
-    }*/
 
     void MoveInHierarchy()
     {

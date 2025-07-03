@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,36 +16,55 @@ public class PlayerScript : MonoBehaviour
     private float rotationY, rotationX, distanceFromTarget, smoothTime = 0.3f;
     private Vector3 currentRotation , smoothVelocity = Vector3.zero;
     private Camera mainCamera;
-    [SerializeField] MoveButtons moveButtons;
+    MoveButtons moveButtons1, moveButtons2;
     [SerializeField] MouseClick mouseClick;
     [SerializeField] ClippingController clippingController;
     private Vector3 mousePos;
     [SerializeField] GameObject pivot;
-    private bool notHit, timerStart, canOrbit, mouseButtonUp, shiftPressed;
+    private bool notHit, timerStart, canOrbit, shiftPressed;
+    public bool mouseButtonUp;
     private float timer;
 
     private void Start()
     {
         mainCamera = Camera.main;
+        moveButtons1 = FindComponentEvenIfDisabled<MoveButtons>("MovementsPanel");
+        moveButtons2 = FindComponentEvenIfDisabled<MoveButtons>("BottomPanel");
+    }
+
+    private static T FindComponentEvenIfDisabled<T>(string parentName) where T : Component
+    {
+        T[] all = Resources.FindObjectsOfTypeAll<T>();
+
+        foreach (T component in all)
+        {
+            if (component.gameObject.name == parentName || component.transform.root.name == parentName || component.transform.parent?.name == parentName)
+            {
+                return component;
+            }
+        }
+
+        Debug.LogWarning($"{typeof(T)} component'i {parentName} altında bulunamadı.");
+        return null;
     }
 
     private void Update()
     {
-        if(!mouseClick.isOverUI && Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButton(2) && !clippingController.isOverTopLayer)
-        { 
+        if (!mouseClick.isOverUI && Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButton(2) && !clippingController.isOverTopLayer)
+        {
             shiftPressed = true;
             canOrbit = true;
             Orbit();
             pivot.SetActive(true);
         }
 
-        if(!mouseClick.isOverUI && Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButton(0) && !clippingController.isOverTopLayer)
+        if (!mouseClick.isOverUI && Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButton(0) && !clippingController.isOverTopLayer)
         {
             shiftPressed = true;
             Pan();
         }
 
-        if(!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && moveButtons.pan && !clippingController.isOverTopLayer && !shiftPressed)
+        if (!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && (moveButtons1.pan || moveButtons2.pan) && !clippingController.isOverTopLayer && !shiftPressed)
         {
             mouseButtonUp = true;
         }
@@ -54,26 +74,26 @@ public class PlayerScript : MonoBehaviour
             mouseButtonUp = true;
         }*/
 
-        if(!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && moveButtons.orbit && !clippingController.isOverTopLayer && !shiftPressed)
-        { 
+        if (!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && (moveButtons1.orbit || moveButtons2.orbit) && !clippingController.isOverTopLayer && !shiftPressed)
+        {
             mouseButtonUp = true;
             canOrbit = true;
             pivot.SetActive(true);
         }
 
-        if (!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && moveButtons.lookAround && !clippingController.isOverTopLayer && !shiftPressed)
+        if (!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && (moveButtons1.lookAround || moveButtons2.lookAround) && !clippingController.isOverTopLayer && !shiftPressed)
         {
             mouseButtonUp = true;
         }
 
-        if(Input.GetMouseButtonUp(0))
-        { 
+        if (Input.GetMouseButtonUp(0))
+        {
             mouseButtonUp = false;
             canOrbit = false;
             pivot.SetActive(false);
         }
-        if(Input.GetMouseButtonUp(2))
-        { 
+        if (Input.GetMouseButtonUp(2))
+        {
             canOrbit = false;
             pivot.SetActive(false);
         }
@@ -89,37 +109,37 @@ public class PlayerScript : MonoBehaviour
         }
 
 
-        if(mouseButtonUp)
+        if (mouseButtonUp)
         {
-            if(moveButtons.pan)
+            if (moveButtons1.pan || moveButtons2.pan)
             {
                 Pan();
             }
-            if(moveButtons.orbit)
+            if (moveButtons1.orbit || moveButtons2.orbit)
             {
                 Orbit();
             }
-            if(moveButtons.lookAround)
+            if (moveButtons1.lookAround || moveButtons2.lookAround)
             {
                 LookAround();
             }
         }
 
-        if(!mouseClick.isOverUI && !canOrbit)
+        if (!mouseClick.isOverUI && !canOrbit)
         {
             Zoom(Input.GetAxis("Mouse ScrollWheel"), mainCamera.orthographic);
         }
 
-        if(timerStart)
+        if (timerStart)
         {
             timer -= Time.deltaTime;
-            if(timer <= 0 && !canOrbit)
+            if (timer <= 0 && !canOrbit)
             {
                 pivot.SetActive(false);
                 timerStart = false;
             }
         }
-        
+
     }
 
     void Orbit()

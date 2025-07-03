@@ -8,7 +8,7 @@ public class Tooltip : MonoBehaviour
     public GameObject tooltipObject; // Tooltip UI objesi
     public TMP_Text tooltipText; // Tooltip'te gösterilecek metin
     public Canvas canvas; // Tooltip'in bağlı olduğu Canvas
-    public Vector2 tooltipOffset = new Vector2(20, -20); // Tooltip'in mouse'a göre ofseti
+    public Vector2 tooltipOffset = new Vector2(100, -20); // Tooltip'in mouse'a göre ofseti
     private GraphicRaycaster raycaster;
 
     private void Start()

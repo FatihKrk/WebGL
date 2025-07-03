@@ -1,9 +1,10 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-    MoveButtons moveButtons;
+    MoveButtons moveButtons1, moveButtons2;
     private RectTransform rectTransform;
     private Canvas canvas;
     private bool isDragging = false;
@@ -12,7 +13,7 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     public LayerMask groundLayer; // Ground için layer seçimi
 
     private Camera uiCamera; // Canvas için kullanılan kamera
-    private Vector3 originalPosition, instantiatePosition = new Vector3(1600, 100, 760); // Image'in orijinal pozisyonu
+    private Vector3 originalPosition, instantiatePosition; // Image'in orijinal pozisyonu
     GameObject emptyObject;
 
     void Awake()
@@ -22,11 +23,11 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         GameObject cnvsObj = GameObject.Find("CanvasCamera");
         uiCamera = cnvsObj.GetComponent<Camera>();
 
-        GameObject mvmObj = GameObject.Find("MovementsPanel");
-        moveButtons = mvmObj.GetComponent<MoveButtons>();
-
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
+
+        moveButtons1 = FindComponentEvenIfDisabled<MoveButtons>("MovementsPanel");
+        moveButtons2 = FindComponentEvenIfDisabled<MoveButtons>("BottomPanel");
 
         if (canvas == null)
         {
@@ -46,6 +47,22 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         emptyObject = new GameObject("InstantiatePosition");
     }
 
+    private static T FindComponentEvenIfDisabled<T>(string parentName) where T : Component
+    {
+        T[] all = Resources.FindObjectsOfTypeAll<T>();
+
+        foreach (T component in all)
+        {
+            if (component.gameObject.name == parentName || component.transform.root.name == parentName || component.transform.parent?.name == parentName)
+            {
+                return component;
+            }
+        }
+
+        Debug.LogWarning($"{typeof(T)} component'i {parentName} altında bulunamadı.");
+        return null;
+    }
+
     void Update()
     {
         // Mouse pozisyonu ile Ground Layer'daki objeleri kontrol et
@@ -56,7 +73,7 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         }
         if (isDragging)
         {
-            FocusCameraOnParent(120f, 45f, 45f);
+            FocusCameraOnParent(20f, 5f, 35f);
         }
     }
 
@@ -88,17 +105,20 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     }
 
     public void OnPointerUp(PointerEventData eventData)
-{
-    isDragging = false;
+    {
+        isDragging = false;
 
-    // Prefab oluştur
-    Instantiate(avatarPrefab, instantiatePosition, Quaternion.identity);
+        // Prefab oluştur
+        Instantiate(avatarPrefab, instantiatePosition, Quaternion.identity);
 
-    moveButtons.Avatar(); // Eğer başka bir işlem yapıyorsanız çağırabilirsiniz
+        if(moveButtons1.gameObject.activeSelf)
+            moveButtons1.Avatar();
+        else
+            moveButtons2.Avatar();
 
-    // UI elemanını orijinal pozisyonuna geri döndür
-    rectTransform.localPosition = originalPosition;
-}
+        // UI elemanını orijinal pozisyonuna geri döndür
+            rectTransform.localPosition = originalPosition;
+    }
 
 
     public void OnDrag(PointerEventData eventData)
@@ -118,9 +138,12 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
             uiCamera,
             out anchoredPosition
         );
-
+        Vector2 pivotOffset = new Vector2(0, 0);
         // Pivot noktasına göre pozisyonu düzelt
-        Vector2 pivotOffset = new Vector2(500, -200);
+        if (moveButtons1.gameObject.activeSelf)
+            pivotOffset = new Vector2(500, -300);
+        else
+            pivotOffset = new Vector2(300, 300);
 
         // Yeni pozisyonu ayarla
         tooltipRectTransform.localPosition = anchoredPosition + pivotOffset;
