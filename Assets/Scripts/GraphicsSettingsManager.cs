@@ -8,7 +8,40 @@ public class GraphicsSettingsManager : MonoBehaviour
     public TMP_Dropdown shadowQualityDropdown;       // Low, Medium, High, VeryHigh (0–3)
     public TMP_Dropdown antiAliasingDropdown;        // Disabled, 2x, 4x, 8x (0–3)
 
-    
+    public TMP_Dropdown uiModeDropdown;    // Inspector’dan ata
+    public GameObject movementPanel;       // Old UI panel
+    public GameObject bottomPanel;         // New UI panel
+
+
+    public GameObject feedbackText; // Inspector’dan ata (Text/TMP objesi)
+    public GameObject optionsPanel; // Paneli kapatmak için
+
+    public void OnApplyClicked()
+    {
+        SaveSettings(); // Ayarları kaydet
+        if (feedbackText != null)
+        {
+            feedbackText.SetActive(true);
+            feedbackText.GetComponent<TMPro.TMP_Text>().text = "Settings applied...";
+            Invoke(nameof(HideFeedback), 2.0f);
+        }
+    }
+
+    public void OnSaveClicked()
+    {
+        SaveSettings();
+        if (optionsPanel != null)
+            optionsPanel.SetActive(false); // Paneli kapat
+    }
+
+    private void HideFeedback()
+    {
+        if (feedbackText != null)
+            feedbackText.SetActive(false);
+    }
+
+
+
     private readonly int[] _aaSamples = { 0, 2, 4, 8 };
 
     private void Start()
@@ -21,7 +54,26 @@ public class GraphicsSettingsManager : MonoBehaviour
         anisotropicTextureDropdown.onValueChanged.AddListener(_ => UpdateProjectSettings());
         shadowQualityDropdown.onValueChanged.AddListener(_ => UpdateProjectSettings());
         antiAliasingDropdown.onValueChanged.AddListener(_ => UpdateProjectSettings());
+
+        uiModeDropdown.value = 0;
+        UpdatePanels(0);
+        uiModeDropdown.onValueChanged.AddListener(UpdatePanels);
     }
+
+    private void UpdatePanels(int index)
+    {
+        if (index == 0)
+        {
+            bottomPanel.SetActive(true);
+            movementPanel.SetActive(false);
+        }
+        else
+        {
+            bottomPanel.SetActive(false);
+            movementPanel.SetActive(true);
+        }
+    }
+
 
     private void ApplyQualitySettings(int preset)
     {
