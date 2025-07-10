@@ -103,7 +103,7 @@ public class ClippingController : MonoBehaviour
             float distanceFromTarget = Vector3.Distance(player.position, moveObj.position);
             moveObj.localScale = new Vector3(distanceFromTarget / 40, distanceFromTarget / 40, distanceFromTarget / 40);
         }
-        if (!moveButtons1.section || !moveButtons2.section)
+        if ((!moveButtons1.section || !moveButtons1.gameObject.activeSelf) && (!moveButtons2.section || !moveButtons2.gameObject.activeSelf))
         {
             scaleObj.gameObject.SetActive(false);
             moveObj.gameObject.SetActive(false);

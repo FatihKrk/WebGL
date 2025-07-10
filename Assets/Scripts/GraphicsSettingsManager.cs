@@ -11,7 +11,7 @@ public class GraphicsSettingsManager : MonoBehaviour
     public TMP_Dropdown uiModeDropdown;    // Inspector’dan ata
     public GameObject movementPanel;       // Old UI panel
     public GameObject bottomPanel;         // New UI panel
-
+    [SerializeField] GameObject fitPanel, movePanel, scalePanel;
 
     public GameObject feedbackText; // Inspector’dan ata (Text/TMP objesi)
     public GameObject optionsPanel; // Paneli kapatmak için
@@ -70,6 +70,9 @@ public class GraphicsSettingsManager : MonoBehaviour
         else
         {
             bottomPanel.SetActive(false);
+            fitPanel.SetActive(false);
+            movePanel.SetActive(false);
+            scalePanel.SetActive(false);
             movementPanel.SetActive(true);
         }
     }

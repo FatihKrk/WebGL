@@ -8,7 +8,7 @@ public class Tooltip : MonoBehaviour
     public GameObject tooltipObject; // Tooltip UI objesi
     public TMP_Text tooltipText; // Tooltip'te gösterilecek metin
     public Canvas canvas; // Tooltip'in bağlı olduğu Canvas
-    public Vector2 tooltipOffset = new Vector2(100, -20); // Tooltip'in mouse'a göre ofseti
+    Vector2 tooltipOffset = new Vector2(10, -15); // Tooltip'in mouse'a göre ofseti
     private GraphicRaycaster raycaster;
 
     private void Start()
@@ -19,7 +19,6 @@ public class Tooltip : MonoBehaviour
 
     private void Update()
     {
-        // Mouse'un altında UI elemanı olup olmadığını kontrol et
         PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
         {
             position = Input.mousePosition
@@ -30,44 +29,45 @@ public class Tooltip : MonoBehaviour
 
         if (results.Count > 0)
         {
-            // İlk UI elemanını al
             GameObject hoveredObject = results[0].gameObject;
 
-            // Eğer objenin tag'i "TooltipObject" ise tooltip'i göster
             if (hoveredObject.CompareTag("TooltipObject"))
             {
-                // Eğer bir metin alanı tanımlıysa, metni güncelle
                 if (tooltipText != null)
-                {
                     tooltipText.text = hoveredObject.name;
-                }
 
                 tooltipObject.SetActive(true);
+                tooltipObject.transform.SetAsLastSibling();
 
-                // Mouse pozisyonunu Canvas koordinatlarına çevir
                 RectTransform canvasRectTransform = canvas.GetComponent<RectTransform>();
                 RectTransform tooltipRectTransform = tooltipObject.GetComponent<RectTransform>();
 
-                Vector2 anchoredPosition;
+                Vector2 localMousePosition;
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(
                     canvasRectTransform,
                     Input.mousePosition,
                     canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
-                    out anchoredPosition
+                    out localMousePosition
                 );
 
-                // Offset'i ekle ve pozisyonu ayarla
-                tooltipRectTransform.anchoredPosition = anchoredPosition + tooltipOffset;
+                // Tooltip boyutu
+                Vector2 tooltipSize = tooltipRectTransform.sizeDelta;
+
+                // Canvas boyutu
+                Vector2 canvasSize = canvasRectTransform.sizeDelta;
+
+                // Ekran sınırlarını kontrol ederek akıllı pozisyonlama
+                Vector2 adjustedOffset = tooltipOffset;
+
+                tooltipRectTransform.anchoredPosition = localMousePosition + adjustedOffset;
             }
             else
             {
-                // Tooltip'i gizle
                 tooltipObject.SetActive(false);
             }
         }
         else
         {
-            // Tooltip'i gizle
             tooltipObject.SetActive(false);
         }
     }

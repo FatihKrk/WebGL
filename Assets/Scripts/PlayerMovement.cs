@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if ((moveButtons1.avatar || moveButtons2.avatar) && Cursor.lockState == CursorLockMode.Locked)
+        if (((moveButtons1.avatar && moveButtons1.gameObject.activeSelf) || (moveButtons2.avatar && moveButtons2.gameObject.activeSelf)) && Cursor.lockState == CursorLockMode.Locked)
         {
             OnApplicationFocus(false);
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
                 playerCamera.transform.SetParent(null);
                 if(moveButtons1.gameObject.activeSelf)
                     moveButtons1.Avatar();
-                else
+                else if(moveButtons2.gameObject.activeSelf)
                     moveButtons2.Avatar();
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;

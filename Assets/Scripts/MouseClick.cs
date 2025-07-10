@@ -42,6 +42,8 @@ public class MouseClick : MonoBehaviour
         moveButtons1 = FindComponentEvenIfDisabled<MoveButtons>("MovementsPanel");
         moveButtons2 = FindComponentEvenIfDisabled<MoveButtons>("BottomPanel");
         visualQueryManager = GameObject.Find("Canvas").GetComponentInChildren<VisualQueryManager>(true);
+        currentObject = parentObject;
+        FindItemPosition();
         MeshRenderer[] allChilds = parentObject.GetComponentsInChildren<MeshRenderer>(true);
         foreach(MeshRenderer mesh in allChilds)
         {
@@ -193,7 +195,7 @@ public class MouseClick : MonoBehaviour
             
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("RVMObjects") && Input.GetMouseButtonDown(0) && !isOverUI && (moveButtons1.select || moveButtons2.select))
+                if (hit.collider.CompareTag("RVMObjects") && Input.GetMouseButtonDown(0) && !isOverUI && ((moveButtons1.select && moveButtons1.gameObject.activeSelf) || (moveButtons2.select && moveButtons2.gameObject.activeSelf)))
                 {
                     clickedObject = hit.collider.gameObject;
                     MultiObjects();
@@ -207,7 +209,7 @@ public class MouseClick : MonoBehaviour
             }
             else
             {
-                if(!isOverUI && Input.GetMouseButtonDown(0) && (moveButtons1.select || moveButtons2.select) && (!moveButtons1.section || !moveButtons2.section) && currentObject != null)
+                if(!isOverUI && Input.GetMouseButtonDown(0) && ((moveButtons1.select && moveButtons1.gameObject.activeSelf) || (moveButtons2.select && moveButtons2.gameObject.activeSelf)) && (!moveButtons1.section || !moveButtons1.gameObject.activeSelf) && (!moveButtons2.section || !moveButtons2.gameObject.activeSelf) && currentObject != null)
                 {
                     ChangeColorBack();
                     selectedItems = parentObject.GetComponentsInChildren<MeshRenderer>();
@@ -567,7 +569,7 @@ public class MouseClick : MonoBehaviour
         foreach (Renderer renderer in selectedItems)
         {
             // VisualQueryManager'ın kontrolü altındaysa işlem yapma
-            if ((moveButtons1.visualQuery || moveButtons2.visualQuery) && visualQueryManager != null && 
+            if (((moveButtons1.visualQuery && moveButtons1.gameObject.activeSelf) || (moveButtons2.visualQuery && moveButtons2.gameObject.activeSelf)) && visualQueryManager != null && 
                 visualQueryManager.originalBlocks.ContainsKey(renderer))
             {
                 renderer.SetPropertyBlock(highlightBlock);
@@ -597,7 +599,7 @@ public class MouseClick : MonoBehaviour
 
         foreach (Renderer renderer in selectedItems)
         {
-            if ((moveButtons1.visualQuery || moveButtons2.visualQuery) && visualQueryManager != null)
+            if (((moveButtons1.visualQuery && moveButtons1.gameObject.activeSelf) || (moveButtons2.visualQuery && moveButtons2.gameObject.activeSelf)) && visualQueryManager != null)
             {
                 if (visualQueryManager.changedBlocks.ContainsKey(renderer))
                 {

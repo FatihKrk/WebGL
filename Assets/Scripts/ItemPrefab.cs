@@ -20,7 +20,7 @@ public class ItemPrefab : MonoBehaviour
     void Awake()
     {
         visualQueryManager = GameObject.Find("Canvas").GetComponentInChildren<VisualQueryManager>();
-        mouseClick = GameObject.Find("MainCamera").GetComponentInChildren<MouseClick>();
+        mouseClick = Camera.main.GetComponentInChildren<MouseClick>();
         first_Parent = GameObject.FindGameObjectWithTag("ParentObject");
     }
 

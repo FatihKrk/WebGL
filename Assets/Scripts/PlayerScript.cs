@@ -64,7 +64,7 @@ public class PlayerScript : MonoBehaviour
             Pan();
         }
 
-        if (!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && (moveButtons1.pan || moveButtons2.pan) && !clippingController.isOverTopLayer && !shiftPressed)
+        if (!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && ((moveButtons1.pan && moveButtons1.gameObject.activeSelf) || (moveButtons2.pan && moveButtons2.gameObject.activeSelf)) && !clippingController.isOverTopLayer && !shiftPressed)
         {
             mouseButtonUp = true;
         }
@@ -74,14 +74,14 @@ public class PlayerScript : MonoBehaviour
             mouseButtonUp = true;
         }*/
 
-        if (!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && (moveButtons1.orbit || moveButtons2.orbit) && !clippingController.isOverTopLayer && !shiftPressed)
+        if (!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && ((moveButtons1.orbit && moveButtons1.gameObject.activeSelf) || (moveButtons2.orbit && moveButtons2.gameObject.activeSelf)) && !clippingController.isOverTopLayer && !shiftPressed)
         {
             mouseButtonUp = true;
             canOrbit = true;
             pivot.SetActive(true);
         }
 
-        if (!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && (moveButtons1.lookAround || moveButtons2.lookAround) && !clippingController.isOverTopLayer && !shiftPressed)
+        if (!mouseClick.isOverUI && Input.GetMouseButtonDown(0) && ((moveButtons1.lookAround && moveButtons1.gameObject.activeSelf) || (moveButtons2.lookAround && moveButtons2.gameObject.activeSelf)) && !clippingController.isOverTopLayer && !shiftPressed)
         {
             mouseButtonUp = true;
         }
@@ -111,15 +111,15 @@ public class PlayerScript : MonoBehaviour
 
         if (mouseButtonUp)
         {
-            if (moveButtons1.pan || moveButtons2.pan)
+            if ((moveButtons1.pan && moveButtons1.gameObject.activeSelf) || (moveButtons2.pan && moveButtons2.gameObject.activeSelf))
             {
                 Pan();
             }
-            if (moveButtons1.orbit || moveButtons2.orbit)
+            if ((moveButtons1.orbit && moveButtons1.gameObject.activeSelf) || (moveButtons2.orbit && moveButtons2.gameObject.activeSelf))
             {
                 Orbit();
             }
-            if (moveButtons1.lookAround || moveButtons2.lookAround)
+            if ((moveButtons1.lookAround && moveButtons1.gameObject.activeSelf) || (moveButtons2.lookAround && moveButtons2.gameObject.activeSelf))
             {
                 LookAround();
             }

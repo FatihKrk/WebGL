@@ -73,7 +73,7 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         }
         if (isDragging)
         {
-            FocusCameraOnParent(20f, 5f, 35f);
+            FocusCameraOnParent(100f, 50f, 45f);
         }
     }
 
@@ -99,9 +99,29 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         Camera.main.transform.LookAt(center);
     }
 
+    private Vector2 dragOffset;
+
     public void OnPointerDown(PointerEventData eventData)
     {
         isDragging = true;
+
+        if (canvas == null || uiCamera == null)
+            return;
+
+        RectTransform canvasRectTransform = canvas.GetComponent<RectTransform>();
+        RectTransform tooltipRectTransform = transform.GetComponent<RectTransform>();
+
+        // Mouse pozisyonunu Canvas'ın lokal pozisyonuna çevir
+        Vector2 localMousePosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRectTransform,
+            eventData.position,
+            uiCamera,
+            out localMousePosition
+        );
+
+        // Drag offset: imajın merkezinden mouse pozisyonuna fark
+        dragOffset = (Vector2)tooltipRectTransform.localPosition - localMousePosition;
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -113,7 +133,7 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
         if(moveButtons1.gameObject.activeSelf)
             moveButtons1.Avatar();
-        else
+        else if(moveButtons2.gameObject.activeSelf)
             moveButtons2.Avatar();
 
         // UI elemanını orijinal pozisyonuna geri döndür
@@ -126,26 +146,18 @@ public class DragImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         if (canvas == null || uiCamera == null)
             return;
 
-        // Mouse pozisyonunu Canvas koordinatlarına çevir
         RectTransform canvasRectTransform = canvas.GetComponent<RectTransform>();
         RectTransform tooltipRectTransform = transform.GetComponent<RectTransform>();
 
-        Vector2 anchoredPosition;
-        // Mouse pozisyonunu Canvas'taki yerel koordinatlara dönüştür
+        Vector2 localMousePosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvasRectTransform,
-            Input.mousePosition,
+            eventData.position,
             uiCamera,
-            out anchoredPosition
+            out localMousePosition
         );
-        Vector2 pivotOffset = new Vector2(0, 0);
-        // Pivot noktasına göre pozisyonu düzelt
-        if (moveButtons1.gameObject.activeSelf)
-            pivotOffset = new Vector2(500, -300);
-        else
-            pivotOffset = new Vector2(300, 300);
 
-        // Yeni pozisyonu ayarla
-        tooltipRectTransform.localPosition = anchoredPosition + pivotOffset;
+        // Offset uygulanmış pozisyon
+        tooltipRectTransform.localPosition = localMousePosition + dragOffset;
     }
 }

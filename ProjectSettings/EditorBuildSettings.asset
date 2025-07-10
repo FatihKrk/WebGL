@@ -5,8 +5,14 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Faruk Test.unity
     guid: 0026e480d7e2da9438cc62c93fb4ab1a
+  - enabled: 0
+    path: Assets/Scenes/GreenSamplePlant2.unity
+    guid: 4bf1f7eece927fb4fb2cd8fbbbbb4d32
+  - enabled: 1
+    path: Assets/Scenes/GreenSamplePlant.unity
+    guid: 651818a3f62d4e0408e761b3ae0c970e
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

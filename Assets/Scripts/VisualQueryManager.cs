@@ -18,7 +18,7 @@ public class VisualQueryManager : MonoBehaviour
     Slider slider, itemPanelSlider, groupPanelSlider;
     public Material newMaterial;
     private Dictionary<int, Color> colorDictionary = new Dictionary<int, Color>();
-    private string apiUrl = "https://m3muhendislik.com/api/sortMegByTag.php";
+    private string apiUrl = "https://m3muhendislik.com/api/sortByTag.php";
 
     [System.Serializable]
     public class ApiResponse
@@ -84,9 +84,9 @@ public class VisualQueryManager : MonoBehaviour
         loadingPanel.SetActive(true);
 
         if(moveButtons1.gameObject.activeSelf)
-                    moveButtons1.visualQuery = true;
-                else
-                    moveButtons2.visualQuery = true;
+            moveButtons1.visualQuery = true;
+        else
+            moveButtons2.visualQuery = true;
         StartCoroutine(InstantiateGroups());
     }
 
