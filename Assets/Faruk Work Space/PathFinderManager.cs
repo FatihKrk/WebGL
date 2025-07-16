@@ -4,10 +4,11 @@ using UnityEngine;
 public class PathFinderManager : MonoBehaviour
 {
     public GameObject parentRoot;
+    public GameObject targetPrefab;
 
     void Start()
     {
-        if (parentRoot == null) return;
+        if (parentRoot == null || targetPrefab == null) return;
 
         MeshRenderer[] meshRenderers = parentRoot.GetComponentsInChildren<MeshRenderer>(true);
 
@@ -17,14 +18,10 @@ public class PathFinderManager : MonoBehaviour
             MeshFilter mf = original.GetComponent<MeshFilter>();
             if (mf == null || mf.sharedMesh == null) continue;
 
-            // --- BURASI EKLENDİ ---
-            // Orijinal objenin ve varsa tüm child objelerin MeshCollider'larını kapat
+            // MeshCollider'ları devre dışı bırak
             MeshCollider[] colliders = original.GetComponentsInChildren<MeshCollider>(true);
             foreach (MeshCollider col in colliders)
-            {
                 col.enabled = false;
-            }
-            // --- BURASI BİTTİ ---
 
             Mesh mesh = mf.sharedMesh;
             Vector3[] vertices = mesh.vertices;
@@ -68,37 +65,26 @@ public class PathFinderManager : MonoBehaviour
                     int b1 = triangles[triB + 1];
                     int b2 = triangles[triB + 2];
 
-                    int sharedCount = 0;
                     int[] aVerts = { a0, a1, a2 };
                     int[] bVerts = { b0, b1, b2 };
 
                     HashSet<int> sharedVerts = new HashSet<int>();
+                    foreach (int av in aVerts)
+                        foreach (int bv in bVerts)
+                            if (av == bv) sharedVerts.Add(av);
 
-                    foreach (int aV in aVerts)
+                    if (sharedVerts.Count == 2)
                     {
-                        foreach (int bV in bVerts)
-                        {
-                            if (aV == bV)
-                            {
-                                sharedCount++;
-                                sharedVerts.Add(aV);
-                            }
-                        }
-                    }
+                        HashSet<int> allVerts = new HashSet<int>(aVerts);
+                        allVerts.UnionWith(bVerts);
 
-                    if (sharedCount == 2)
-                    {
-                        HashSet<int> quadVertIndices = new HashSet<int>(aVerts);
-                        quadVertIndices.UnionWith(bVerts);
-
-                        if (quadVertIndices.Count == 4)
+                        if (allVerts.Count == 4)
                         {
                             quadVertices = new Vector3[4];
                             int index = 0;
-                            foreach (int vi in quadVertIndices)
-                            {
+                            foreach (int vi in allVerts)
                                 quadVertices[index++] = vertices[vi];
-                            }
+
                             foundQuad = true;
                             break;
                         }
@@ -113,58 +99,36 @@ public class PathFinderManager : MonoBehaviour
                 continue;
             }
 
-            Vector3[] prismVertices = new Vector3[8];
-            for (int i = 0; i < 4; i++)
-            {
-                prismVertices[i] = quadVertices[i];
-                prismVertices[i + 4] = quadVertices[i] + new Vector3(0, 0, 0.01f);
-            }
+            // Yüzeydeki noktalar localSpace, dünya uzayına çevirmeye gerek yok
+            // Bu vertexlere göre prefab yerleştirilecek
 
-            int[] prismTriangles = new int[]
-            {
-                0, 1, 2,
-                2, 3, 0,
+            // Pozisyon
+            Vector3 localCenter = (quadVertices[0] + quadVertices[1] + quadVertices[2] + quadVertices[3]) / 4f;
 
-                4, 6, 5,
-                6, 4, 7,
+            // Yönler
+            Vector3 xDir = (quadVertices[1] - quadVertices[0]).normalized;
+            Vector3 zDir = (quadVertices[3] - quadVertices[0]).normalized;
+            Vector3 yDir = Vector3.Cross(zDir, xDir).normalized;
 
-                0, 4, 5,
-                5, 1, 0,
+            // Boyut
+            float width = Vector3.Distance(quadVertices[0], quadVertices[1]);
+            float depth = Vector3.Distance(quadVertices[0], quadVertices[3]);
+            float height = 0.01f;
 
-                1, 5, 6,
-                6, 2, 1,
+            // Instantiate
+            GameObject newObj = Instantiate(targetPrefab);
+            newObj.name = original.name + "_PlacedPrefab";
+            newObj.layer = LayerMask.NameToLayer("Ground");
 
-                2, 6, 7,
-                7, 3, 2,
+            // Yerleştirme
+            newObj.transform.SetParent(original.transform, false); // önce localSpace içinde
+            newObj.transform.localPosition = localCenter;
+            newObj.transform.localRotation = Quaternion.LookRotation(zDir, yDir);
+            float scaleFactor = 0.1f;
+            newObj.transform.localScale = new Vector3(width * scaleFactor, height * scaleFactor, depth * scaleFactor);
 
-                3, 7, 4,
-                4, 0, 3
-            };
-
-            Mesh prismMesh = new Mesh();
-            prismMesh.vertices = prismVertices;
-            prismMesh.triangles = prismTriangles;
-            prismMesh.RecalculateNormals();
-
-            GameObject copy = new GameObject(original.name + "_BottomPrism");
-            copy.transform.SetParent(original.transform, false);
-
-            copy.layer = LayerMask.NameToLayer("Ground");
-
-            MeshFilter copyMF = copy.AddComponent<MeshFilter>();
-            copyMF.mesh = prismMesh;
-
-            MeshRenderer copyMR = copy.AddComponent<MeshRenderer>();
-            Material mat = new Material(Shader.Find("Unlit/Color"));
-            mat.color = Color.white;
-            mat.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
-            copyMR.material = mat;
-
-            MeshCollider copyCollider = copy.AddComponent<MeshCollider>();
-            copyCollider.sharedMesh = prismMesh;
-            copyCollider.convex = true;
-
-            rend.enabled = false; // Orijinal objeyi kapatmak istersen burayı açabilirsin
+            // Orijinal MeshRenderer'ı kapat
+            rend.enabled = false;
         }
     }
 }
