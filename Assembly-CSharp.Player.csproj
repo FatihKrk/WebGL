@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\PrefabManager.cs" />
     <Compile Include="Assets\Faruk Work Space\NavmeshBakeController.cs" />
     <Compile Include="Assets\Scripts\Tooltip.cs" />
+    <Compile Include="Assets\Faruk Work Space\NavmeshRouteFinder.cs" />
     <Compile Include="Assets\Packages\FlexibleColorPicker\Scripts\FCP_SpriteMeshEditor.cs" />
     <Compile Include="Assets\Scripts\Compass3D.cs" />
     <Compile Include="Assets\Scripts\Hide_n_UnHide.cs" />
