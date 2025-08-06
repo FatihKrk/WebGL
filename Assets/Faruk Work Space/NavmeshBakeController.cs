@@ -1,6 +1,8 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
+using System.Collections;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -14,41 +16,69 @@ public class NavmeshBakeController : MonoBehaviour
     void Start()
     {
         surface = GetComponent<NavMeshSurface>();
+        StartCoroutine(DelayedBake());
+    }
 
-        // Objenin meshlerine gˆre world space'de ayarla
-        FitSurfaceToWorldBounds();
+    IEnumerator DelayedBake()
+    {
+        yield return new WaitForSeconds(5f); // ‚è±Ô∏è 1 saniye bekle
 
-        // Bake ba˛lat
+        MarkOnlyGroundObjects();
+        FitBoundsToGroundObjects();
         BakeNavMesh();
     }
 
-    void FitSurfaceToWorldBounds()
+    void MarkOnlyGroundObjects()
     {
-        // Objeye ve alt objelerine ait t¸m MeshRenderer'lar˝ al
-        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
-        if (renderers.Length == 0) return;
+        GameObject[] allObjects = FindObjectsOfType<GameObject>();
 
-        Bounds worldBounds = renderers[0].bounds;
-        foreach (var rend in renderers)
-            worldBounds.Encapsulate(rend.bounds);
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj == this.gameObject) continue;
 
-        // World space'te bulunan bounds'˝ local space'e Áevir
-        Vector3 worldCenter = worldBounds.center;
+            if (!obj.TryGetComponent(out NavMeshModifier modifier))
+                modifier = obj.AddComponent<NavMeshModifier>();
+
+            if (obj.layer == LayerMask.NameToLayer("Ground"))
+                modifier.ignoreFromBuild = false;
+            else
+                modifier.ignoreFromBuild = true;
+        }
+
+        surface.collectObjects = CollectObjects.All;
+    }
+
+    void FitBoundsToGroundObjects()
+    {
+        MeshRenderer[] allRenderers = FindObjectsOfType<MeshRenderer>();
+        List<MeshRenderer> groundRenderers = new List<MeshRenderer>();
+
+        foreach (MeshRenderer rend in allRenderers)
+        {
+            if (rend.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                groundRenderers.Add(rend);
+        }
+
+        if (groundRenderers.Count == 0) return;
+
+        Bounds bounds = groundRenderers[0].bounds;
+        foreach (MeshRenderer rend in groundRenderers)
+            bounds.Encapsulate(rend.bounds);
+
+        Vector3 worldCenter = bounds.center;
         Vector3 localCenter = transform.InverseTransformPoint(worldCenter);
 
         surface.center = localCenter;
-        surface.size = worldBounds.size;
-
-        // Ayr˝ca sadece kendi Áocuklar˝n˝ topla
-        surface.collectObjects = CollectObjects.Children;
+        surface.size = bounds.size;
     }
 
     void BakeNavMesh()
     {
 #if UNITY_EDITOR
-        surface.BuildNavMesh();
+        surface.RemoveData();      // √ñnceki NavMeshData'yƒ± sil
+        surface.BuildNavMesh();    // Tek bir tane NavMeshData olu≈ütur
 #else
-        Debug.LogWarning("Runtime'da NavMesh bake desteklenmez.");
+        Debug.LogWarning("Runtime'da NavMesh bake edilmez.");
 #endif
     }
 }
