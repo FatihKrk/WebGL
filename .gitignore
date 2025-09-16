@@ -23,3 +23,41 @@ Webgl.sln
 *.apk
 .vscode/
 .idea/
+# ===== ADDITIONS (append-only) =====
+# IDE / OS (eksik kalmış olabilecekler)
+.vs/
+*.suo
+*.user
+*.userprefs
+*.opendb
+*.vsidx
+*.log
+Thumbs.db
+.DS_Store
+*.tmp
+
+# Unity build/cache (genel desenler)
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild*/
+[Ll]ogs/
+UserSettings/
+MemoryCaptures/
+
+# Unity projelerinde IDE projeleri (tek tek yerine genel)
+*.csproj
+*.sln
+*.unityproj
+*.pidb
+*.mdb
+*.pdb
+
+# Editor klasörleri
+.vscode/
+.idea/
+
+# Paket çıktı türleri
+*.apk
+# ===== END ADDITIONS =====
+

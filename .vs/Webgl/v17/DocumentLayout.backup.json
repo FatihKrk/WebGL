@@ -3,6 +3,7 @@
   "WorkspaceRootPath": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\",
   "Documents": [
     {
+<<<<<<< Updated upstream
       "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|c:\\users\\iremb\\desktop\\webg_\\webgl\\assets\\scripts\\graphicssettingsmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\graphicssettingsmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -73,6 +74,38 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\UIManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\UIManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\faruk work space\\simpletestclimber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\faruk work space\\simpletestclimber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|c:\\users\\iremb\\desktop\\webg_\\webgl\\assets\\faruk work space\\runtimeladderlinks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\faruk work space\\runtimeladderlinks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\faruk work space\\manuallinkclimber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\faruk work space\\manuallinkclimber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\faruk work space\\smartnavmeshfollower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\faruk work space\\smartnavmeshfollower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\faruk work space\\navmeshlinkclimber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\faruk work space\\navmeshlinkclimber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\faruk work space\\navmeshbakecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\faruk work space\\navmeshbakecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\faruk work space\\offmeshlinkclimber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\faruk work space\\offmeshlinkclimber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\assets\\faruk work space\\navmeshroutefinder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EDA0F1C-31B8-59E2-2F36-D85CFB95BABB}|Assembly-CSharp.csproj|solutionrelative:assets\\faruk work space\\navmeshroutefinder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> Stashed changes
     }
   ],
   "DocumentGroupContainers": [
@@ -82,6 +115,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< Updated upstream
           "SelectedChildIndex": 0,
           "Children": [
             {
@@ -96,10 +130,31 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-04T08:24:31.021Z",
               "EditorCaption": ""
+=======
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "NavmeshRouteFinder.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\NavmeshRouteFinder.cs",
+              "RelativeDocumentMoniker": "Assets\\Faruk Work Space\\NavmeshRouteFinder.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\NavmeshRouteFinder.cs",
+              "RelativeToolTip": "Assets\\Faruk Work Space\\NavmeshRouteFinder.cs",
+              "ViewState": "AgIAAPQAAAAAAAAAAADwvwoBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-18T10:02:55.691Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+>>>>>>> Stashed changes
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+<<<<<<< Updated upstream
               "Title": "ToolManager.cs",
               "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\ToolManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ToolManager.cs",
@@ -108,11 +163,35 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-04T07:05:38.972Z",
+=======
+              "Title": "RuntimeLadderLinks.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\RuntimeLadderLinks.cs",
+              "RelativeDocumentMoniker": "Assets\\Faruk Work Space\\RuntimeLadderLinks.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\RuntimeLadderLinks.cs",
+              "RelativeToolTip": "Assets\\Faruk Work Space\\RuntimeLadderLinks.cs",
+              "ViewState": "AgIAAPwAAAAAAAAAAAAUwBYBAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-12T13:40:04.94Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SimpleTestClimber.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\SimpleTestClimber.cs",
+              "RelativeDocumentMoniker": "Assets\\Faruk Work Space\\SimpleTestClimber.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\SimpleTestClimber.cs",
+              "RelativeToolTip": "Assets\\Faruk Work Space\\SimpleTestClimber.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAmwDsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-12T13:12:33.422Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+<<<<<<< Updated upstream
               "Title": "ToolSelectButton.cs",
               "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\ToolSelectButton.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ToolSelectButton.cs",
@@ -122,10 +201,21 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-04T07:02:02.871Z",
               "EditorCaption": ""
+=======
+              "Title": "ManualLinkClimber.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\ManualLinkClimber.cs",
+              "RelativeDocumentMoniker": "Assets\\Faruk Work Space\\ManualLinkClimber.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\ManualLinkClimber.cs",
+              "RelativeToolTip": "Assets\\Faruk Work Space\\ManualLinkClimber.cs",
+              "ViewState": "AgIAAP4AAAAAAAAAAAAIwB4BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-12T10:36:16.989Z"
+>>>>>>> Stashed changes
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+<<<<<<< Updated upstream
               "Title": "SearchBar.cs",
               "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\SearchBar.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SearchBar.cs",
@@ -277,10 +367,21 @@
               "ViewState": "AgIAAAoAAAAAAAAAAAAQwCEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-03T11:32:06.841Z"
+=======
+              "Title": "SmartNavMeshFollower.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\SmartNavMeshFollower.cs",
+              "RelativeDocumentMoniker": "Assets\\Faruk Work Space\\SmartNavMeshFollower.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\SmartNavMeshFollower.cs",
+              "RelativeToolTip": "Assets\\Faruk Work Space\\SmartNavMeshFollower.cs",
+              "ViewState": "AgIAALcAAAAAAAAAAAAUwNgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-12T10:01:08.682Z"
+>>>>>>> Stashed changes
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+<<<<<<< Updated upstream
               "Title": "ClippingController.cs",
               "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Scripts\\ClippingController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ClippingController.cs",
@@ -301,6 +402,40 @@
               "ViewState": "AgIAAAsAAAAAAAAAAAAxwC4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-28T08:36:46.274Z"
+=======
+              "Title": "NavMeshLinkClimber.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\NavMeshLinkClimber.cs",
+              "RelativeDocumentMoniker": "Assets\\Faruk Work Space\\NavMeshLinkClimber.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\NavMeshLinkClimber.cs",
+              "RelativeToolTip": "Assets\\Faruk Work Space\\NavMeshLinkClimber.cs",
+              "ViewState": "AgIAABEBAAAAAAAAAAAUwDIBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-12T08:33:06.069Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NavmeshBakeController.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\NavmeshBakeController.cs",
+              "RelativeDocumentMoniker": "Assets\\Faruk Work Space\\NavmeshBakeController.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\NavmeshBakeController.cs",
+              "RelativeToolTip": "Assets\\Faruk Work Space\\NavmeshBakeController.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAIwFQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-11T10:19:32.502Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "OffMeshLinkClimber.cs",
+              "DocumentMoniker": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\OffMeshLinkClimber.cs",
+              "RelativeDocumentMoniker": "Assets\\Faruk Work Space\\OffMeshLinkClimber.cs",
+              "ToolTip": "C:\\Users\\iremb\\Desktop\\WebG_\\WebGL\\Assets\\Faruk Work Space\\OffMeshLinkClimber.cs",
+              "RelativeToolTip": "Assets\\Faruk Work Space\\OffMeshLinkClimber.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAIwIYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-20T07:28:48.323Z"
+>>>>>>> Stashed changes
             }
           ]
         }
